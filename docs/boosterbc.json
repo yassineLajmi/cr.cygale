@@ -1,0 +1,3942 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Booster BC API Documentation",
+    "description": "# Booster BC API\nIs the fastest and lightest hotel distribution API  for developing your own travel website or mobile app. \n\nBooster BC API Hotels is made up of two APIs : \n     \n- [Hotel Content API]() : Find, book and manage your reservations with ease.\n     \n- [Hotel Booking API]() : Get detailed information about our portfolio of hotels, including images, descriptions, and more.\n\nBooster BC API is delivered via HTTPS POST, GET, and DELETE requests. Request and response data is in JSON format, which allows you to easily create requests and analyze responses in a standard way using the tools included with most modern languages.",
+    "version": "3.0.6"
+  },
+  "externalDocs": {
+    "description": "Booster BC helpdesk",
+    "url": "https://support.boosterbc.com"
+  },
+  "servers": [
+    {
+      "url": "http://api-test.boosterbc.com",
+      "description": "For Test :"
+    },
+    {
+      "url": "https://api-prod.boosterbc.com",
+      "description": "For Production : "
+    }
+  ],
+  "security": [
+    {
+      "apiKey": [],
+      "Signature": [],
+      "Timestamp": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Getting Started",
+      "description": "There are tow simple steps before starting development with Booster BC API: get your API Key and Password, configure your Authentication and begin testing\n\n## Request an API Key\n   Request your API Key and password from our helpdesk [https://support.boosterbc.com]() . We would need you to send your server ip address. In only a few clicks you will be able to get your API Key for testing. The API key is required to launch every request of our API.\n\n## Configure your authentication & Begin testing  \n \n Once you get your API Key and Password you will already have all you need to do your first request to our APIs: \n\n\n   To authenticate, you must send both the API Key and the Signature, a SHA512 hash in Hex format calculated from your API key, your password plus current timestamps in seconds:\n      \n      \n       $apiKey = '123';\n       $password= '123';\n       $timestamp = time();\n       $signature = hash(\"sha512\", $apiKey.$password.$timestamp);\n   \n Once you have received your credentials and have configured your authentication, you can start making requests against our test endpoint, [http://api.test.boosterbc.com](). \n \n   "
+    },
+    {
+      "name": "Hotel Content API",
+      "description": "Hotel Content API has been designed to retrieve all the details of the hotels available in our [Hotel Booking API]().\n\nHotel Content API contains several methods that allow you to obtain the details of the hotels as well as list of countries, cities, hotel chain and hotel themes that complement the hotels information.\n\nNote that the Languages operation is connected to all the operations in which a description is returned, since we return the language code in which that description has been returned.\n   \n   "
+    },
+    {
+      "name": "Hotel Booking API",
+      "description": "Hotel Booking API is designed to book hotels in real time as fast as in two steps. It covers the complete booking process; it allows generating lists of hotels, getting lists of bookings, obtaining booking information, making cancellations and modify existing bookings.\n\nHotel Booking API works in combination with [Hotel Content API]() to obtain content information from the hotels, such as pictures, description, facilities, etc.\n\nPlease refer to the [Hotel Content API]() documentation  for related information."
+    },
+    {
+      "name": "Certification",
+      "description": "In this section, we'll provide you with all the information you need to complete the certification process, which will ensure your integration  is ready.\n\n\nYou can contact us with any doubts or questions at [https://support.boosterbc.com]() .\n## Certification goals\n   The Certification process intention is to test and ensure that your integration was properly developed, that functionality and implementation of the relevant and mandatory information are done correctly and without errors.\n   \n Having said that, our certification process will look at 6 different steps.\n \n## Step1\n    Below is the list of test cases that needs to be executed by clients at their end. JSON Request/ Response for these cases along with the confirmation  numbers and screenshots under the folder  associeted to each case will be required for verification as part of certification process:\n    \n     \n   | Number | Case      | Logs  |\n   |---------------|------------------------|----------------------------------|\n   | 1 |Create a booking for 1 room for 1 adult| Screenshots: case1;BookingRef:|\n   |---------------|------------------------|----------------------------------|\n   | 2|Create a booking for 1 room  for 2 children(8,10)|Screenshots: case2 ; BookingRef:|\n   |---------------|------------------------|----------------------------------|\n   | 3|Create a booking for 2 rooms for 2 adults (2 nights)  |Screenshots: case3;BookingRef:|\n   |---------------|------------------------|----------------------------------|\n   | 4| Create a booking for 2rooms: 1 rooms for 1 adult + 2 children(5,3) +1 infant and 1 room for 3 adults|Screenshots: case4;BookingRef:|\n   |---------------|------------------------|----------------------------------|\n   | 5|Create a booking for 2 rooms: 1 room for 2 adults and 1 room for 2 children |Screenshots: case5;BookingRef: |\n   |---------------|------------------------|----------------------------------|\n   | 6|Create a booking for 2 rooms: 1 room for 2 adults + 2 children(8,10)and 1 room for 4 adults.|Screenshots: case6;BookingRef: |\n   |---------------|------------------------|----------------------------------|\n   | 7|Create a booking for 3 rooms: 1 room for 2 adults, 1 room for 2 adults and 1 room for  1 adult+1child(7)|Screenshots: case7;BookingRef: |\n   |---------------|------------------------|----------------------------------|\n   | 8|Create a booking for 2 rooms: 1 room for 2 adults+1infant and 1room for 2 children+1infant|Screenshots:case8;BookingRef: |\n   |---------------|------------------------|----------------------------------|\n   | 9|Create a booking for 1 room for 1 adult with a with a compulsory dinner supplement : |Screenshots:case9;BookingRef: |\n     \n     \n  \n      \n       \n       \n       \n\n\n    \n    \n    \n    \n    \n \n## Step2\n   Remember to send us the following information on your request, these may include:\n   \n       •  Search\n       •  Availability\n       •  CheckRate\n       •  Book\n       •  voucher\n       •  Cancel\n\n\n## Step3\n       For all confirmed reservations, it is mandatory to generate a voucher containing all the information regarding the reservation and allow the client (either if it's B2B or B2C) to get it easily.\n       Please, check that the following information appears at the voucher (and it is correctly informed).\n       It's mandatory to display:\n       \n           •  Hotel Address\n           •  Hotel telephone number\n           •  HotelName\n           •  Paxes Names\n           •  Room type\n           •  board type\n           •  payable by the supplier\n           •  Chekin -chechout\n           •  rateComents\n           •  bookingRef\n           •  secondRef\n\n ## Step4\n     Client makes a certification request by providing JSON Request/ Response along with booking reference for the test cases as suggested in Step 1.\n     \n ## Step5\n     Booster BC  will verify the test cases using JSON Request/ Response and suggest, if there is any change required. The turnaround time for the test case verification is around 4-5 days working days.   \n\n ## Step6\n     On successful completion of all the above steps, Booster BC will provide Live access details to the client. "
+    }
+  ],
+  "paths": {
+    "/rest/content-v4/hotels": {
+      "get": {
+        "tags": [
+          "Hotel Content API"
+        ],
+        "summary": "Hotels",
+        "description": "Returns the list of currently existing hotels.",
+        "externalDocs": {
+          "description": "Example",
+          "url": "http://api-test.boosterbc.com/rest/content-v4/hotels?apikey=27c24c82-fd25-ab39-22f609f7f47dc262&countryId=2&cityId=3&lang=FR"
+        },
+        "operationId": "Hotels",
+        "parameters": [
+          {
+            "name": "apikey",
+            "in": "header",
+            "description": "The api Key",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "27c24c82-fd25-ab39-22f609f7f47dc262"
+          },
+          {
+            "name": "signature",
+            "in": "header",
+            "description": "SHA512 encoding signature",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "3b18ca94f0df3d9ecd556db14d2a171e29df8f8bcf909b67137078cbcfaf34d392f2b298252de86d2849f295f6e"
+          },
+          {
+            "name": "timestamp",
+            "in": "header",
+            "description": "UTC timestamp in seconds",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "hotelId",
+            "in": "query",
+            "description": "Filter to limit the results for an specific hotel",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 8050
+          },
+          {
+            "name": "countryId",
+            "in": "query",
+            "description": "Filter to limit the results for an specific country.If country is not specified, Tunisia will be used as default country.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "default": 2
+            },
+            "example": 2
+          },
+          {
+            "name": "cityId",
+            "in": "query",
+            "description": "Filter to limit the results for a specific city .",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 3
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "The language code for the language in which you want the descriptions to be returned. If language is not specified, French will be used as default language.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "default": "fr"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/hotelRS"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "**BAD REQUEST** - The server cannot or will not process the request due to an apparent client error.\n\n*INVALID_REQUEST* - The request is not compliant with the specified version of the API. The message body will contain more information\n\n*INVALID_DATA* - The JSON or XML syntax is correct, however some of the fields contain incorrect data. Please check the documentation for the allowed values and follow the message returned in order to fix this error."
+          },
+          "401": {
+            "description": "**UNAUTHORIZED** - Authentication has failed or has not been provided.\n\n* Authorization field missing\n\n* Request signature verification failed",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Request signature verification failed"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "payment"
+          },
+          "403": {
+            "description": "**FORBIDDEN** - The credentials are correct and authorization was succesful, but access to this resource/operation is not allowed.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Access to this API has been disallowed"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "**NOT FOUND** - The requested resource could not be found. This error can be due to a temporary or permanent condition."
+          },
+          "406": {
+            "description": "**NOT ACCEPTABLE** - The resource identified by the request is only capable of generating response entities which have content characteristics not acceptable according to the accept headers sent in the request.",
+            "content": {
+              "application/json": {
+                "example": "no body"
+              }
+            }
+          },
+          "409": {
+            "description": "conflict"
+          },
+          "410": {
+            "description": "error repeated"
+          },
+          "415": {
+            "description": "**UNSUPPORTED MEDIA TYPE** - Use the Content-Type header to set application/json and be sure the format of your payload matches the format",
+            "content": {
+              "application/json": {
+                "example": "no body"
+              }
+            }
+          },
+          "429": {
+            "description": "**Rate limit exceeded** - The user has sent too many requests in a given amount of time."
+          },
+          "500": {
+            "description": "**INTERNAL SERVER ERROR** - An unexpected condition was encountered. Possible causes\n\n*SYSTEM_ERROR* - These are internal server errors, please send us these errors together with the complete logs (JSON  requests and responses) at [support@boosterbc.com]() so that our team can review them. \n\n*PRODUCT_ERROR* - This type of error is produced due to product restrictions or due to other account set-up limitations. In all cases, the end result is that the booking cannot be confirmed. Here is a list"
+          },
+          "502": {
+            "description": "**BAD GATEWAY** - The server was acting as a gateway or proxy and received an invalid response from the upstream server."
+          },
+          "503": {
+            "description": "**SERVICE UNAVAILABLE** - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again.\n\n*SERVICE_OVERLOAD* - The server is currently unable to handle the request due to an overwhelming number of requests being processed. Condition which will be alleviated after some delay."
+          },
+          "504": {
+            "description": "**GATEWAY TIMEOUT** - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again."
+          },
+          "513": {
+            "description": "**APPLICATION ERROR** - Indicates that an involved backend application returned an error or warning, which is passed back in the response message."
+          },
+          "596": {
+            "description": "**SERVICE NOT FOUND** - An invalid endpoint has being reached. Please check that the endpoint you are using to send the petitions is correct."
+          }
+        }
+      }
+    },
+    "/rest/content-v4/rooms": {
+      "get": {
+        "tags": [
+          "Hotel Content API"
+        ],
+        "summary": "Rooms",
+        "description": "Returns the list of currently existing hotels.",
+        "externalDocs": {
+          "description": "Example",
+          "url": "http://api-test.boosterbc.com/rest/content-v4/rooms?hotelId=100119164&roomId=68286"
+        },
+        "operationId": "Rooms",
+        "parameters": [
+          {
+            "name": "apikey",
+            "in": "header",
+            "description": "The api Key",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "27c24c82-fd25-ab39-22f609f7f47dc262"
+          },
+          {
+            "name": "signature",
+            "in": "header",
+            "description": "SHA512 encoding signature",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "3b18ca94f0df3d9ecd556db14d2a171e29df8f8bcf909b67137078cbcfaf34d392f2b298252de86d2849f295f6e"
+          },
+          {
+            "name": "timestamp",
+            "in": "header",
+            "description": "UTC timestamp in seconds",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "hotelId",
+            "in": "query",
+            "description": "Filter to limit the results for an specific hotel",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 100119164
+          },
+          {
+            "name": "roomId",
+            "in": "query",
+            "description": "Filter to limit the results for a specific room in a specific hotel .",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 68286
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/roomsRS"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "**BAD REQUEST** - The server cannot or will not process the request due to an apparent client error.\n\n*INVALID_REQUEST* - The request is not compliant with the specified version of the API. The message body will contain more information\n\n*INVALID_DATA* - The JSON or XML syntax is correct, however some of the fields contain incorrect data. Please check the documentation for the allowed values and follow the message returned in order to fix this error."
+          },
+          "401": {
+            "description": "**UNAUTHORIZED** - Authentication has failed or has not been provided.\n\n* Authorization field missing\n\n* Request signature verification failed",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Request signature verification failed"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "payment"
+          },
+          "403": {
+            "description": "**FORBIDDEN** - The credentials are correct and authorization was succesful, but access to this resource/operation is not allowed.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Access to this API has been disallowed"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "**NOT FOUND** - The requested resource could not be found. This error can be due to a temporary or permanent condition."
+          },
+          "406": {
+            "description": "**NOT ACCEPTABLE** - The resource identified by the request is only capable of generating response entities which have content characteristics not acceptable according to the accept headers sent in the request.",
+            "content": {
+              "application/json": {
+                "example": "no body"
+              }
+            }
+          },
+          "409": {
+            "description": "conflict"
+          },
+          "410": {
+            "description": "error repeated"
+          },
+          "415": {
+            "description": "**UNSUPPORTED MEDIA TYPE** - Use the Content-Type header to set application/json and be sure the format of your payload matches the format",
+            "content": {
+              "application/json": {
+                "example": "no body"
+              }
+            }
+          },
+          "429": {
+            "description": "**Rate limit exceeded** - The user has sent too many requests in a given amount of time."
+          },
+          "500": {
+            "description": "**INTERNAL SERVER ERROR** - An unexpected condition was encountered. Possible causes\n\n*SYSTEM_ERROR* - These are internal server errors, please send us these errors together with the complete logs (JSON  requests and responses) at [support@boosterbc.com]() so that our team can review them. \n\n*PRODUCT_ERROR* - This type of error is produced due to product restrictions or due to other account set-up limitations. In all cases, the end result is that the booking cannot be confirmed. Here is a list"
+          },
+          "502": {
+            "description": "**BAD GATEWAY** - The server was acting as a gateway or proxy and received an invalid response from the upstream server."
+          },
+          "503": {
+            "description": "**SERVICE UNAVAILABLE** - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again.\n\n*SERVICE_OVERLOAD* - The server is currently unable to handle the request due to an overwhelming number of requests being processed. Condition which will be alleviated after some delay."
+          },
+          "504": {
+            "description": "**GATEWAY TIMEOUT** - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again."
+          },
+          "513": {
+            "description": "**APPLICATION ERROR** - Indicates that an involved backend application returned an error or warning, which is passed back in the response message."
+          },
+          "596": {
+            "description": "**SERVICE NOT FOUND** - An invalid endpoint has being reached. Please check that the endpoint you are using to send the petitions is correct."
+          }
+        }
+      }
+    },
+    "/rest/content-v4/countries": {
+      "get": {
+        "tags": [
+          "Hotel Content API"
+        ],
+        "summary": "Countries",
+        "description": "Returns the list of available countries.",
+        "externalDocs": {
+          "description": "Example",
+          "url": "http://api-test.boosterbc.com/rest/content-v4/countries?apiKey=27c24c82-fd25-ab39-22f609f7f47dc262"
+        },
+        "operationId": "Countries",
+        "parameters": [
+          {
+            "name": "apiKey",
+            "in": "header",
+            "description": "The api Key",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "27c24c82-fd25-ab39-22f609f7f47dc262"
+          },
+          {
+            "name": "signature",
+            "in": "header",
+            "description": "SHA512 encoding signature",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "3b18ca94f0df3d9ecd556db14d2a171e29df8f8bcf909b67137078cbcfaf34d392f2b298252de86d2849f295f6e"
+          },
+          {
+            "name": "timestamp",
+            "in": "header",
+            "description": "UTC timestamp in seconds",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "Lang",
+            "in": "query",
+            "description": "The language code for the language in which you want the descriptions to be returned. If language is not specified, French will be used as default language.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "default": "fr"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of countries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/countryRS"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "**BAD REQUEST** - The server cannot or will not process the request due to an apparent client error.\n\n*INVALID_REQUEST* - The request is not compliant with the specified version of the API. The message body will contain more information\n\n*INVALID_DATA* - The JSON or XML syntax is correct, however some of the fields contain incorrect data. Please check the documentation for the allowed values and follow the message returned in order to fix this error."
+          },
+          "401": {
+            "description": "**UNAUTHORIZED** - Authentication has failed or has not been provided.\n\n* Authorization field missing\n\n* Request signature verification failed",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Request API key verification failed"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "payment"
+          },
+          "403": {
+            "description": "**FORBIDDEN** - The credentials are correct and authorization was succesful, but access to this resource/operation is not allowed.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Access to this API has been disallowed"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "**NOT FOUND** - The requested resource could not be found. This error can be due to a temporary or permanent condition."
+          },
+          "406": {
+            "description": "**NOT ACCEPTABLE** - The resource identified by the request is only capable of generating response entities which have content characteristics not acceptable according to the accept headers sent in the request.",
+            "content": {
+              "application/json": {
+                "example": "no body"
+              }
+            }
+          },
+          "409": {
+            "description": "conflict"
+          },
+          "410": {
+            "description": "error repeated"
+          },
+          "415": {
+            "description": "**UNSUPPORTED MEDIA TYPE** - Use the Content-Type header to set application/json and be sure the format of your payload matches the format",
+            "content": {
+              "application/json": {
+                "example": "no body"
+              }
+            }
+          },
+          "429": {
+            "description": "**Rate limit exceeded** - The user has sent too many requests in a given amount of time."
+          },
+          "500": {
+            "description": "**INTERNAL SERVER ERROR** - An unexpected condition was encountered. Possible causes\n\n*SYSTEM_ERROR* - These are internal server errors, please send us these errors together with the complete logs (JSON  requests and responses) at [support@boosterbc.com]() so that our team can review them. \n\n*PRODUCT_ERROR* - This type of error is produced due to product restrictions or due to other account set-up limitations. In all cases, the end result is that the booking cannot be confirmed. Here is a list"
+          },
+          "502": {
+            "description": "**BAD GATEWAY** - The server was acting as a gateway or proxy and received an invalid response from the upstream server."
+          },
+          "503": {
+            "description": "**SERVICE UNAVAILABLE** - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again.\n\n*SERVICE_OVERLOAD* - The server is currently unable to handle the request due to an overwhelming number of requests being processed. Condition which will be alleviated after some delay."
+          },
+          "504": {
+            "description": "**GATEWAY TIMEOUT** - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again."
+          },
+          "513": {
+            "description": "**APPLICATION ERROR** - Indicates that an involved backend application returned an error or warning, which is passed back in the response message."
+          },
+          "596": {
+            "description": "**SERVICE NOT FOUND** - An invalid endpoint has being reached. Please check that the endpoint you are using to send the petitions is correct."
+          }
+        }
+      }
+    },
+    "/rest/content-v4/cities": {
+      "get": {
+        "tags": [
+          "Hotel Content API"
+        ],
+        "summary": "Cities",
+        "description": "Returns the list of available cities for an specific country.",
+        "externalDocs": {
+          "description": "Example",
+          "url": "http://api-test.boosterbc.com/rest/content-v4/cities?apikey=27c24c82-fd25-ab39-22f609f7f47dc262&countryId=1&lang=FR"
+        },
+        "operationId": "Cities",
+        "parameters": [
+          {
+            "name": "apikey",
+            "in": "header",
+            "description": "The api Key",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "27c24c82-fd25-ab39-22f609f7f47dc262"
+          },
+          {
+            "name": "signature",
+            "in": "header",
+            "description": "SHA512 encoding signature",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "3b18ca94f0df3d9ecd556db14d2a171e29df8f8bcf909b67137078cbcfaf34d392f2b298252de86d2849f295f6e"
+          },
+          {
+            "name": "timestamp",
+            "in": "header",
+            "description": "UTC timestamp in seconds",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "countryId",
+            "in": "query",
+            "description": "Filter to limit the results for an specific country. If country is not specified, Tunisia will be used as default country.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "default": 2
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "The language code for the language in which you want the descriptions to be returned. If language is not specified, French will be used as default language.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "default": "fr"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of cities",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/cityRS"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "**BAD REQUEST** - The server cannot or will not process the request due to an apparent client error.\n\n*INVALID_REQUEST* - The request is not compliant with the specified version of the API. The message body will contain more information\n\n*INVALID_DATA* - The JSON or XML syntax is correct, however some of the fields contain incorrect data. Please check the documentation for the allowed values and follow the message returned in order to fix this error."
+          },
+          "401": {
+            "description": "**UNAUTHORIZED** - Authentication has failed or has not been provided.\n\n* Authorization field missing\n\n* Request signature verification failed",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Request API key verification failed"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "payment"
+          },
+          "403": {
+            "description": "**FORBIDDEN** - The credentials are correct and authorization was succesful, but access to this resource/operation is not allowed.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Access to this API has been disallowed"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "**NOT FOUND** - The requested resource could not be found. This error can be due to a temporary or permanent condition."
+          },
+          "406": {
+            "description": "**NOT ACCEPTABLE** - The resource identified by the request is only capable of generating response entities which have content characteristics not acceptable according to the accept headers sent in the request.",
+            "content": {
+              "application/json": {
+                "example": "no body"
+              }
+            }
+          },
+          "409": {
+            "description": "conflict"
+          },
+          "410": {
+            "description": "error repeated"
+          },
+          "415": {
+            "description": "**UNSUPPORTED MEDIA TYPE** - Use the Content-Type header to set application/json and be sure the format of your payload matches the format",
+            "content": {
+              "application/json": {
+                "example": "no body"
+              }
+            }
+          },
+          "429": {
+            "description": "**Rate limit exceeded** - The user has sent too many requests in a given amount of time."
+          },
+          "500": {
+            "description": "**INTERNAL SERVER ERROR** - An unexpected condition was encountered. Possible causes\n\n*SYSTEM_ERROR* - These are internal server errors, please send us these errors together with the complete logs (JSON  requests and responses) at [support@boosterbc.com]() so that our team can review them. \n\n*PRODUCT_ERROR* - This type of error is produced due to product restrictions or due to other account set-up limitations. In all cases, the end result is that the booking cannot be confirmed. Here is a list"
+          },
+          "502": {
+            "description": "**BAD GATEWAY** - The server was acting as a gateway or proxy and received an invalid response from the upstream server."
+          },
+          "503": {
+            "description": "**SERVICE UNAVAILABLE** - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again.\n\n*SERVICE_OVERLOAD* - The server is currently unable to handle the request due to an overwhelming number of requests being processed. Condition which will be alleviated after some delay."
+          },
+          "504": {
+            "description": "**GATEWAY TIMEOUT** - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again."
+          },
+          "513": {
+            "description": "**APPLICATION ERROR** - Indicates that an involved backend application returned an error or warning, which is passed back in the response message."
+          },
+          "596": {
+            "description": "**SERVICE NOT FOUND** - An invalid endpoint has being reached. Please check that the endpoint you are using to send the petitions is correct."
+          }
+        }
+      }
+    },
+    "/rest/content-v4/hotelchains": {
+      "get": {
+        "tags": [
+          "Hotel Content API"
+        ],
+        "summary": "Hotel Chains",
+        "description": "Returns the list of available hotels chain .",
+        "externalDocs": {
+          "description": "Example",
+          "url": "http://api-test.boosterbc.com/rest/content-v4/hotelchains?apikey=27c24c82-fd25-ab39-22f609f7f47dc262&countryId=2&lang=FR"
+        },
+        "operationId": "hotelChains",
+        "parameters": [
+          {
+            "name": "apikey",
+            "in": "header",
+            "description": "The api Key",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "27c24c82-fd25-ab39-22f609f7f47dc262"
+          },
+          {
+            "name": "signature",
+            "in": "header",
+            "description": "SHA256 encoding signature",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "3b18ca94f0df3d9ecd556db14d2a171e29df8f8bcf909b67137078cbcfaf34d392f2b298252de86d2849f295f6e"
+          },
+          {
+            "name": "timestamp",
+            "in": "header",
+            "description": "UTC timestamp in seconds",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "countryId",
+            "in": "query",
+            "description": "Filter to limit the results for an specific country.If country is not specified, Tunisia will be used as default country.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "default": 2
+            }
+          },
+          {
+            "name": "Lang",
+            "in": "query",
+            "description": "The language code for the language in which you want the descriptions to be returned. If language is not specified, French will be used as default language.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "default": "fr"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of hotelChains",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/hoteltchainRS"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "**BAD REQUEST** - The server cannot or will not process the request due to an apparent client error.\n\n*INVALID_REQUEST* - The request is not compliant with the specified version of the API. The message body will contain more information\n\n*INVALID_DATA* - The JSON or XML syntax is correct, however some of the fields contain incorrect data. Please check the documentation for the allowed values and follow the message returned in order to fix this error."
+          },
+          "401": {
+            "description": "**UNAUTHORIZED** - Authentication has failed or has not been provided.\n\n* Authorization field missing\n\n* Request signature verification failed",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Request API Key verification failed"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "payment"
+          },
+          "403": {
+            "description": "**FORBIDDEN** - The credentials are correct and authorization was succesful, but access to this resource/operation is not allowed.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Access to this API has been disallowed"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "**NOT FOUND** - The requested resource could not be found. This error can be due to a temporary or permanent condition."
+          },
+          "406": {
+            "description": "**NOT ACCEPTABLE** - The resource identified by the request is only capable of generating response entities which have content characteristics not acceptable according to the accept headers sent in the request.",
+            "content": {
+              "application/json": {
+                "example": "no body"
+              }
+            }
+          },
+          "409": {
+            "description": "conflict"
+          },
+          "410": {
+            "description": "error repeated"
+          },
+          "415": {
+            "description": "**UNSUPPORTED MEDIA TYPE** - Use the Content-Type header to set application/json and be sure the format of your payload matches the format",
+            "content": {
+              "application/json": {
+                "example": "no body"
+              }
+            }
+          },
+          "429": {
+            "description": "**Rate limit exceeded** - The user has sent too many requests in a given amount of time."
+          },
+          "500": {
+            "description": "**INTERNAL SERVER ERROR** - An unexpected condition was encountered. Possible causes\n\n*SYSTEM_ERROR* - These are internal server errors, please send us these errors together with the complete logs (JSON  requests and responses) at [support@boosterbc.com]() so that our team can review them. \n\n*PRODUCT_ERROR* - This type of error is produced due to product restrictions or due to other account set-up limitations. In all cases, the end result is that the booking cannot be confirmed. Here is a list"
+          },
+          "502": {
+            "description": "**BAD GATEWAY** - The server was acting as a gateway or proxy and received an invalid response from the upstream server."
+          },
+          "503": {
+            "description": "**SERVICE UNAVAILABLE** - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again.\n\n*SERVICE_OVERLOAD* - The server is currently unable to handle the request due to an overwhelming number of requests being processed. Condition which will be alleviated after some delay."
+          },
+          "504": {
+            "description": "**GATEWAY TIMEOUT** - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again."
+          },
+          "513": {
+            "description": "**APPLICATION ERROR** - Indicates that an involved backend application returned an error or warning, which is passed back in the response message."
+          },
+          "596": {
+            "description": "**SERVICE NOT FOUND** - An invalid endpoint has being reached. Please check that the endpoint you are using to send the petitions is correct."
+          }
+        }
+      }
+    },
+    "/rest/content-v4/hotelthemes": {
+      "get": {
+        "tags": [
+          "Hotel Content API"
+        ],
+        "summary": "Hotel Themes",
+        "description": "Returns the list of hotel themes. ",
+        "externalDocs": {
+          "description": "Example",
+          "url": "http://api-test.boosterbc.com/rest/content-v4/hotelthemes?apikey=27c24c82-fd25-ab39-22f609f7f47dc262&lang=FR"
+        },
+        "operationId": "hotelThemes",
+        "parameters": [
+          {
+            "name": "apiKey",
+            "in": "header",
+            "description": "The api Key",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "27c24c82-fd25-ab39-22f609f7f47dc262"
+          },
+          {
+            "name": "signature",
+            "in": "header",
+            "description": "SHA512 encoding signature",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "3b18ca94f0df3d9ecd556db14d2a171e29df8f8bcf909b67137078cbcfaf34d392f2b298252de86d2849f295f6e"
+          },
+          {
+            "name": "timestamp",
+            "in": "header",
+            "description": "UTC timestamp in seconds",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "Lang",
+            "in": "query",
+            "description": "The language code for the language in which you want the descriptions to be returned. If language is not specified, French will be used as default language.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "default": "fr"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of hotelthemes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/hotelthemeRS"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "**BAD REQUEST** - The server cannot or will not process the request due to an apparent client error.\n\n*INVALID_REQUEST* - The request is not compliant with the specified version of the API. The message body will contain more information\n\n*INVALID_DATA* - The JSON or XML syntax is correct, however some of the fields contain incorrect data. Please check the documentation for the allowed values and follow the message returned in order to fix this error."
+          },
+          "401": {
+            "description": "**UNAUTHORIZED** - Authentication has failed or has not been provided.\n\n* Authorization field missing\n\n* Request signature verification failed",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Request API Key verification failed"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "payment"
+          },
+          "403": {
+            "description": "**FORBIDDEN** - The credentials are correct and authorization was succesful, but access to this resource/operation is not allowed.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Access to this API has been disallowed"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "**NOT FOUND** - The requested resource could not be found. This error can be due to a temporary or permanent condition."
+          },
+          "406": {
+            "description": "**NOT ACCEPTABLE** - The resource identified by the request is only capable of generating response entities which have content characteristics not acceptable according to the accept headers sent in the request.",
+            "content": {
+              "application/json": {
+                "example": "no body"
+              }
+            }
+          },
+          "409": {
+            "description": "conflict"
+          },
+          "410": {
+            "description": "error repeated"
+          },
+          "415": {
+            "description": "**UNSUPPORTED MEDIA TYPE** - Use the Content-Type header to set application/json and be sure the format of your payload matches the format",
+            "content": {
+              "application/json": {
+                "example": "no body"
+              }
+            }
+          },
+          "429": {
+            "description": "**Rate limit exceeded** - The user has sent too many requests in a given amount of time."
+          },
+          "500": {
+            "description": "**INTERNAL SERVER ERROR** - An unexpected condition was encountered. Possible causes\n\n*SYSTEM_ERROR* - These are internal server errors, please send us these errors together with the complete logs (JSON  requests and responses) at [support@boosterbc.com]() so that our team can review them. \n\n*PRODUCT_ERROR* - This type of error is produced due to product restrictions or due to other account set-up limitations. In all cases, the end result is that the booking cannot be confirmed. Here is a list"
+          },
+          "502": {
+            "description": "**BAD GATEWAY** - The server was acting as a gateway or proxy and received an invalid response from the upstream server."
+          },
+          "503": {
+            "description": "**SERVICE UNAVAILABLE** - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again.\n\n*SERVICE_OVERLOAD* - The server is currently unable to handle the request due to an overwhelming number of requests being processed. Condition which will be alleviated after some delay."
+          },
+          "504": {
+            "description": "**GATEWAY TIMEOUT** - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again."
+          },
+          "513": {
+            "description": "**APPLICATION ERROR** - Indicates that an involved backend application returned an error or warning, which is passed back in the response message."
+          },
+          "596": {
+            "description": "**SERVICE NOT FOUND** - An invalid endpoint has being reached. Please check that the endpoint you are using to send the petitions is correct."
+          }
+        }
+      }
+    },
+    "/hotels/availability": {
+      "get": {
+        "tags": [
+          "Hotel Booking API"
+        ],
+        "summary": "Hotel Availability",
+        "description": "Search hotels and rooms available in a given time period.\n",
+        "externalDocs": {
+          "description": "Example",
+          "url": "http://api-test.boosterbc.com/rest/hotels-v4/availability?apikey=53e2c390-c81f-66f5-a6933ef8172f3832&cityId=3&checkin=2019-11-10&checkout=2019-11-12&pax=1&itemsPerPage=100"
+        },
+        "operationId": "availability",
+        "parameters": [
+          {
+            "name": "apiKey",
+            "in": "header",
+            "description": "The api Key",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "27c24c82-fd25-ab39-22f609f7f47dc262"
+          },
+          {
+            "name": "signature",
+            "in": "header",
+            "description": "SHA512 encoding signature",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "3b18ca94f0df3d9ecd556db14d2a171e29df8f8bcf909b67137078cbcfaf34d392f2b298252de86d2849f295f6e"
+          },
+          {
+            "name": "timestamp",
+            "in": "header",
+            "description": "UTC timestamp in seconds",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "cityId",
+            "in": "query",
+            "description": "Filter to limit the results for an specific city.",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "itemsPerPage",
+            "in": "query",
+            "description": "The number of the hotels to receive. If nothing is specified, 10 is the default value.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 100
+          },
+          {
+            "name": "hotelCodes",
+            "in": "query",
+            "description": "Filter to limit the results for specific hotels. Maximum 150 is recommended to send in one request separated by a comma.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "10017,100392,33289,332202,338167,332240,32829,338432"
+          },
+          {
+            "name": "checkin",
+            "in": "query",
+            "description": "Check-in date. Can not be greater than checkout.Must be in the formatted as YYYY-MM-DD",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "checkout",
+            "in": "query",
+            "description": "Check-out date.Must be in the formatted as YYYY-MM-DD",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "pax",
+            "in": "query",
+            "description": "Data of the passengers assigned to a room. eg :\n\n1x room :\n\n  1 adult (single) : pax=1\n  \n  1 adult + 1 child(6 years old) :pax=1,6\n  \n  2 adults + 2 children (5 et 7 years old) :pax=2,5,7\n  \n  \n2x room :\n\n  (1 adult) + (1 adult + 1 child of 7 years old) : pax=1;1,7  \n",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clientNationality",
+            "in": "query",
+            "description": "Filter to limit the results for an specific nationality.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "boardId",
+            "in": "query",
+            "description": "Filter to limit the results for an specific board.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "hotelId",
+            "in": "query",
+            "description": "Filter to limit the results for an specific hotel.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "hotelChainId",
+            "in": "query",
+            "description": "Filter to limit the results for an specific hotel chain.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "rating",
+            "in": "query",
+            "description": "Filter to limit the results for an specific hotel rating.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/availabilityRS"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "**BAD REQUEST** - The server cannot or will not process the request due to an apparent client error.\n\n*INVALID_REQUEST* - The request is not compliant with the specified version of the API. The message body will contain more information\n\n*INVALID_DATA* - The JSON or XML syntax is correct, however some of the fields contain incorrect data. Please check the documentation for the allowed values and follow the message returned in order to fix this error."
+          },
+          "401": {
+            "description": "**UNAUTHORIZED** - Authentication has failed or has not been provided.\n\n* Authorization field missing\n\n* Request signature verification failed",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Request API Key verification failed"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "payment"
+          },
+          "403": {
+            "description": "**FORBIDDEN** - The credentials are correct and authorization was succesful, but access to this resource/operation is not allowed.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Access to this API has been disallowed"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "**NOT FOUND** - The requested resource could not be found. This error can be due to a temporary or permanent condition."
+          },
+          "406": {
+            "description": "**NOT ACCEPTABLE** - The resource identified by the request is only capable of generating response entities which have content characteristics not acceptable according to the accept headers sent in the request.",
+            "content": {
+              "application/json": {
+                "example": "no body"
+              }
+            }
+          },
+          "409": {
+            "description": "conflict"
+          },
+          "410": {
+            "description": "error repeated"
+          },
+          "415": {
+            "description": "**UNSUPPORTED MEDIA TYPE** - Use the Content-Type header to set application/json and be sure the format of your payload matches the format",
+            "content": {
+              "application/json": {
+                "example": "no body"
+              }
+            }
+          },
+          "429": {
+            "description": "**Rate limit exceeded** - The user has sent too many requests in a given amount of time."
+          },
+          "500": {
+            "description": "**INTERNAL SERVER ERROR** - An unexpected condition was encountered. Possible causes\n\n*SYSTEM_ERROR* - These are internal server errors, please send us these errors together with the complete logs (JSON  requests and responses) at [support@boosterbc.com]() so that our team can review them. \n\n*PRODUCT_ERROR* - This type of error is produced due to product restrictions or due to other account set-up limitations. In all cases, the end result is that the booking cannot be confirmed. Here is a list"
+          },
+          "502": {
+            "description": "**BAD GATEWAY** - The server was acting as a gateway or proxy and received an invalid response from the upstream server."
+          },
+          "503": {
+            "description": "**SERVICE UNAVAILABLE** - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again.\n\n*SERVICE_OVERLOAD* - The server is currently unable to handle the request due to an overwhelming number of requests being processed. Condition which will be alleviated after some delay."
+          },
+          "504": {
+            "description": "**GATEWAY TIMEOUT** - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again."
+          },
+          "513": {
+            "description": "**APPLICATION ERROR** - Indicates that an involved backend application returned an error or warning, which is passed back in the response message."
+          },
+          "596": {
+            "description": "**SERVICE NOT FOUND** - An invalid endpoint has being reached. Please check that the endpoint you are using to send the petitions is correct."
+          }
+        }
+      }
+    },
+    "/hotels/checkRate": {
+      "post": {
+        "tags": [
+          "Hotel Booking API"
+        ],
+        "summary": "CheckRate",
+        "description": "Get a detailed and updated breakdown of an hotel room rate.\n",
+        "operationId": "checkRate",
+        "parameters": [
+          {
+            "name": "apiKey",
+            "in": "header",
+            "description": "The api Key",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "27c24c82-fd25-ab39-22f609f7f47dc262"
+          },
+          {
+            "name": "signature",
+            "in": "header",
+            "description": "SHA512 encoding signature",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "3b18ca94f0df3d9ecd556db14d2a171e29df8f8bcf909b67137078cbcfaf34d392f2b298252de86d2849f295f6e"
+          },
+          {
+            "name": "timestamp",
+            "in": "header",
+            "description": "UTC timestamp in seconds",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/checkRateRQ"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/checkRateRS"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "**BAD REQUEST** - The server cannot or will not process the request due to an apparent client error.\n\n*INVALID_REQUEST* - The request is not compliant with the specified version of the API. The message body will contain more information\n\n*INVALID_DATA* - The JSON or XML syntax is correct, however some of the fields contain incorrect data. Please check the documentation for the allowed values and follow the message returned in order to fix this error."
+          },
+          "401": {
+            "description": "**UNAUTHORIZED** - Authentication has failed or has not been provided.\n\n* Authorization field missing\n\n* Request signature verification failed",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Request API Key verification failed"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "payment"
+          },
+          "403": {
+            "description": "**FORBIDDEN** - The credentials are correct and authorization was succesful, but access to this resource/operation is not allowed.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Access to this API has been disallowed"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "**NOT FOUND** - The requested resource could not be found. This error can be due to a temporary or permanent condition."
+          },
+          "406": {
+            "description": "**NOT ACCEPTABLE** - The resource identified by the request is only capable of generating response entities which have content characteristics not acceptable according to the accept headers sent in the request.",
+            "content": {
+              "application/json": {
+                "example": "no body"
+              }
+            }
+          },
+          "409": {
+            "description": "conflict"
+          },
+          "410": {
+            "description": "error repeated"
+          },
+          "415": {
+            "description": "**UNSUPPORTED MEDIA TYPE** - Use the Content-Type header to set application/json and be sure the format of your payload matches the format",
+            "content": {
+              "application/json": {
+                "example": "no body"
+              }
+            }
+          },
+          "429": {
+            "description": "**Rate limit exceeded** - The user has sent too many requests in a given amount of time."
+          },
+          "500": {
+            "description": "**INTERNAL SERVER ERROR** - An unexpected condition was encountered. Possible causes\n\n*SYSTEM_ERROR* - These are internal server errors, please send us these errors together with the complete logs (JSON  requests and responses) at [support@boosterbc.com]() so that our team can review them. \n\n*PRODUCT_ERROR* - This type of error is produced due to product restrictions or due to other account set-up limitations. In all cases, the end result is that the booking cannot be confirmed. Here is a list"
+          },
+          "502": {
+            "description": "**BAD GATEWAY** - The server was acting as a gateway or proxy and received an invalid response from the upstream server."
+          },
+          "503": {
+            "description": "**SERVICE UNAVAILABLE** - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again.\n\n*SERVICE_OVERLOAD* - The server is currently unable to handle the request due to an overwhelming number of requests being processed. Condition which will be alleviated after some delay."
+          },
+          "504": {
+            "description": "**GATEWAY TIMEOUT** - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again."
+          },
+          "513": {
+            "description": "**APPLICATION ERROR** - Indicates that an involved backend application returned an error or warning, which is passed back in the response message."
+          },
+          "596": {
+            "description": "**SERVICE NOT FOUND** - An invalid endpoint has being reached. Please check that the endpoint you are using to send the petitions is correct."
+          }
+        }
+      }
+    },
+    "/hotels/book": {
+      "post": {
+        "tags": [
+          "Hotel Booking API"
+        ],
+        "summary": "Booking Confirmation",
+        "description": "The Booking operation requests a reservation confirmation for the specified ratekey or ratekeys.\n\n ",
+        "operationId": "book",
+        "parameters": [
+          {
+            "name": "apiKey",
+            "in": "header",
+            "description": "The api Key",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "27c24c82-fd25-ab39-22f609f7f47dc262"
+          },
+          {
+            "name": "signature",
+            "in": "header",
+            "description": "SHA512 encoding signature",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "3b18ca94f0df3d9ecd556db14d2a171e29df8f8bcf909b67137078cbcfaf34d392f2b298252de86d2849f295f6e"
+          },
+          {
+            "name": "timestamp",
+            "in": "header",
+            "description": "UTC timestamp in seconds",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/bookRQ"
+              },
+              "examples": {
+                "EX1": {
+                  "summary": "Booking one room",
+                  "value": {
+                    "holder": {
+                      "firstName": "test",
+                      "lastName": "test"
+                    },
+                    "rooms": [
+                      {
+                        "ratekey": "20191111|20191112|16946|3|42115|5|1|1~2~3|xxx",
+                        "paxes": [
+                          {
+                            "firstName": "test",
+                            "lastName": "test",
+                            "type": "AD",
+                            "title": "MR"
+                          },
+                          {
+                            "firstName": "test2",
+                            "lastName": "test2",
+                            "type": "CH",
+                            "age": 2,
+                            "title": "MR"
+                          },
+                          {
+                            "firstName": "test3",
+                            "lastName": "test3",
+                            "type": "CH",
+                            "age": 3,
+                            "title": "Mlle"
+                          }
+                        ]
+                      }
+                    ],
+                    "apikey": "53e2c390-c81f-66f5-a6933ef8172f3832",
+                    "searchCode": "844014d5-3417-ebbf-fb1b251694b71111",
+                    "langId": 1,
+                    "remark": "Une belle chambre vip svp"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/bookRS"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "**BAD REQUEST** - The server cannot or will not process the request due to an apparent client error.\n\n*INVALID_REQUEST* - The request is not compliant with the specified version of the API. The message body will contain more information\n\n*INVALID_DATA* - The JSON or XML syntax is correct, however some of the fields contain incorrect data. Please check the documentation for the allowed values and follow the message returned in order to fix this error."
+          },
+          "401": {
+            "description": "**UNAUTHORIZED** - Authentication has failed or has not been provided.\n\n* Authorization field missing\n\n* Request signature verification failed",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Request API Key verification failed"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "payment"
+          },
+          "403": {
+            "description": "**FORBIDDEN** - The credentials are correct and authorization was succesful, but access to this resource/operation is not allowed.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Access to this API has been disallowed"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "**NOT FOUND** - The requested resource could not be found. This error can be due to a temporary or permanent condition."
+          },
+          "406": {
+            "description": "**NOT ACCEPTABLE** - The resource identified by the request is only capable of generating response entities which have content characteristics not acceptable according to the accept headers sent in the request.",
+            "content": {
+              "application/json": {
+                "example": "no body"
+              }
+            }
+          },
+          "409": {
+            "description": "conflict"
+          },
+          "410": {
+            "description": "error repeated"
+          },
+          "415": {
+            "description": "**UNSUPPORTED MEDIA TYPE** - Use the Content-Type header to set application/json and be sure the format of your payload matches the format",
+            "content": {
+              "application/json": {
+                "example": "no body"
+              }
+            }
+          },
+          "429": {
+            "description": "**Rate limit exceeded** - The user has sent too many requests in a given amount of time."
+          },
+          "500": {
+            "description": "**INTERNAL SERVER ERROR** - An unexpected condition was encountered. Possible causes\n\n*SYSTEM_ERROR* - These are internal server errors, please send us these errors together with the complete logs (JSON  requests and responses) at [support@boosterbc.com]() so that our team can review them. \n\n*PRODUCT_ERROR* - This type of error is produced due to product restrictions or due to other account set-up limitations. In all cases, the end result is that the booking cannot be confirmed. Here is a list"
+          },
+          "502": {
+            "description": "**BAD GATEWAY** - The server was acting as a gateway or proxy and received an invalid response from the upstream server."
+          },
+          "503": {
+            "description": "**SERVICE UNAVAILABLE** - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again.\n\n*SERVICE_OVERLOAD* - The server is currently unable to handle the request due to an overwhelming number of requests being processed. Condition which will be alleviated after some delay."
+          },
+          "504": {
+            "description": "**GATEWAY TIMEOUT** - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again."
+          },
+          "513": {
+            "description": "**APPLICATION ERROR** - Indicates that an involved backend application returned an error or warning, which is passed back in the response message."
+          },
+          "596": {
+            "description": "**SERVICE NOT FOUND** - An invalid endpoint has being reached. Please check that the endpoint you are using to send the petitions is correct."
+          }
+        }
+      }
+    },
+    "/bookings/search": {
+      "get": {
+        "tags": [
+          "Hotel Booking API"
+        ],
+        "summary": "Booking List",
+        "description": "The booking list operation returns a list of bookings based on the search criteria. The most important information returned for each booking in the list is:\n\n  *  Booking reference\n  *  Booking holder\n  *  Booking paxes\n  *  Hotel, rooms and boards confirmed\n  *  Booking rates\n  \nThe results are returned in a paginated response that can be filtered with the use of parameters in the request.\n",
+        "externalDocs": {
+          "description": "Example",
+          "url": "http://api-test.boosterbc.com/rest/bookings-v2/search?apiKey=588aa333-c81f-66f5-a6936794a03baa6b&from=2019-01-01&to=2019-01-02"
+        },
+        "operationId": "bookingList",
+        "parameters": [
+          {
+            "name": "apiKey",
+            "in": "header",
+            "description": "The api Key",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "27c24c82-fd25-ab39-22f609f7f47dc262"
+          },
+          {
+            "name": "signature",
+            "in": "header",
+            "description": "SHA512 encoding signature",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "3b18ca94f0df3d9ecd556db14d2a171e29df8f8bcf909b67137078cbcfaf34d392f2b298252de86d2849f295f6e"
+          },
+          {
+            "name": "timestamp",
+            "in": "header",
+            "description": "UTC timestamp in seconds",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "apikey",
+            "in": "query",
+            "description": "The api Key",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "27c24c82-fd25-ab39-22f609f7f47dc262"
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "The arrival date.",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "Date of departure.",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "bookingId",
+            "in": "query",
+            "description": "Booking identifier",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "statusId",
+            "in": "query",
+            "description": "Status identifier",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "customerId",
+            "in": "query",
+            "description": "Customer identifier",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "hotelId",
+            "in": "query",
+            "description": "Hotel identifier",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/searchRS"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "**BAD REQUEST** - The server cannot or will not process the request due to an apparent client error.\n\n*INVALID_REQUEST* - The request is not compliant with the specified version of the API. The message body will contain more information\n\n*INVALID_DATA* - The JSON or XML syntax is correct, however some of the fields contain incorrect data. Please check the documentation for the allowed values and follow the message returned in order to fix this error."
+          },
+          "401": {
+            "description": "**UNAUTHORIZED** - Authentication has failed or has not been provided.\n\n* Authorization field missing\n\n* Request signature verification failed",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Request API Key verification failed"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "payment"
+          },
+          "403": {
+            "description": "**FORBIDDEN** - The credentials are correct and authorization was succesful, but access to this resource/operation is not allowed.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Access to this API has been disallowed"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "**NOT FOUND** - The requested resource could not be found. This error can be due to a temporary or permanent condition."
+          },
+          "406": {
+            "description": "**NOT ACCEPTABLE** - The resource identified by the request is only capable of generating response entities which have content characteristics not acceptable according to the accept headers sent in the request.",
+            "content": {
+              "application/json": {
+                "example": "no body"
+              }
+            }
+          },
+          "409": {
+            "description": "conflict"
+          },
+          "410": {
+            "description": "error repeated"
+          },
+          "415": {
+            "description": "**UNSUPPORTED MEDIA TYPE** - Use the Content-Type header to set application/json and be sure the format of your payload matches the format",
+            "content": {
+              "application/json": {
+                "example": "no body"
+              }
+            }
+          },
+          "429": {
+            "description": "**Rate limit exceeded** - The user has sent too many requests in a given amount of time."
+          },
+          "500": {
+            "description": "**INTERNAL SERVER ERROR** - An unexpected condition was encountered. Possible causes\n\n*SYSTEM_ERROR* - These are internal server errors, please send us these errors together with the complete logs (JSON  requests and responses) at [support@boosterbc.com]() so that our team can review them. \n\n*PRODUCT_ERROR* - This type of error is produced due to product restrictions or due to other account set-up limitations. In all cases, the end result is that the booking cannot be confirmed. Here is a list"
+          },
+          "502": {
+            "description": "**BAD GATEWAY** - The server was acting as a gateway or proxy and received an invalid response from the upstream server."
+          },
+          "503": {
+            "description": "**SERVICE UNAVAILABLE** - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again.\n\n*SERVICE_OVERLOAD* - The server is currently unable to handle the request due to an overwhelming number of requests being processed. Condition which will be alleviated after some delay."
+          },
+          "504": {
+            "description": "**GATEWAY TIMEOUT** - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again."
+          },
+          "513": {
+            "description": "**APPLICATION ERROR** - Indicates that an involved backend application returned an error or warning, which is passed back in the response message."
+          },
+          "596": {
+            "description": "**SERVICE NOT FOUND** - An invalid endpoint has being reached. Please check that the endpoint you are using to send the petitions is correct."
+          }
+        }
+      }
+    },
+    "/booking/cancel": {
+      "delete": {
+        "tags": [
+          "Hotel Booking API"
+        ],
+        "summary": "Cancel The Booking",
+        "description": "Booking Cancellation is a DELETE method operation that can be used To cancel the booking.\n",
+        "operationId": "cancel",
+        "parameters": [
+          {
+            "name": "apiKey",
+            "in": "header",
+            "description": "The api Key",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "27c24c82-fd25-ab39-22f609f7f47dc262"
+          },
+          {
+            "name": "signature",
+            "in": "header",
+            "description": "SHA512 encoding signature",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "3b18ca94f0df3d9ecd556db14d2a171e29df8f8bcf909b67137078cbcfaf34d392f2b298252de86d2849f295f6e"
+          },
+          {
+            "name": "timestamp",
+            "in": "header",
+            "description": "UTC timestamp in seconds",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "bookingId",
+            "in": "query",
+            "description": "Booking identifier taken from the confirmation response or from the booking list function.",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/cancelRS"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "**BAD REQUEST** - The server cannot or will not process the request due to an apparent client error.\n\n*INVALID_REQUEST* - The request is not compliant with the specified version of the API. The message body will contain more information\n\n*INVALID_DATA* - The JSON or XML syntax is correct, however some of the fields contain incorrect data. Please check the documentation for the allowed values and follow the message returned in order to fix this error."
+          },
+          "401": {
+            "description": "**UNAUTHORIZED** - Authentication has failed or has not been provided.\n\n* Authorization field missing\n\n* Request signature verification failed",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Request API Key verification failed"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "payment"
+          },
+          "403": {
+            "description": "**FORBIDDEN** - The credentials are correct and authorization was succesful, but access to this resource/operation is not allowed.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Access to this API has been disallowed"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "**NOT FOUND** - The requested resource could not be found. This error can be due to a temporary or permanent condition."
+          },
+          "406": {
+            "description": "**NOT ACCEPTABLE** - The resource identified by the request is only capable of generating response entities which have content characteristics not acceptable according to the accept headers sent in the request.",
+            "content": {
+              "application/json": {
+                "example": "no body"
+              }
+            }
+          },
+          "409": {
+            "description": "conflict"
+          },
+          "410": {
+            "description": "error repeated"
+          },
+          "415": {
+            "description": "**UNSUPPORTED MEDIA TYPE** - Use the Content-Type header to set application/json and be sure the format of your payload matches the format",
+            "content": {
+              "application/json": {
+                "example": "no body"
+              }
+            }
+          },
+          "429": {
+            "description": "**Rate limit exceeded** - The user has sent too many requests in a given amount of time."
+          },
+          "500": {
+            "description": "**INTERNAL SERVER ERROR** - An unexpected condition was encountered. Possible causes\n\n*SYSTEM_ERROR* - These are internal server errors, please send us these errors together with the complete logs (JSON  requests and responses) at [support@boosterbc.com]() so that our team can review them. \n\n*PRODUCT_ERROR* - This type of error is produced due to product restrictions or due to other account set-up limitations. In all cases, the end result is that the booking cannot be confirmed. Here is a list"
+          },
+          "502": {
+            "description": "**BAD GATEWAY** - The server was acting as a gateway or proxy and received an invalid response from the upstream server."
+          },
+          "503": {
+            "description": "**SERVICE UNAVAILABLE** - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again.\n\n*SERVICE_OVERLOAD* - The server is currently unable to handle the request due to an overwhelming number of requests being processed. Condition which will be alleviated after some delay."
+          },
+          "504": {
+            "description": "**GATEWAY TIMEOUT** - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again."
+          },
+          "513": {
+            "description": "**APPLICATION ERROR** - Indicates that an involved backend application returned an error or warning, which is passed back in the response message."
+          },
+          "596": {
+            "description": "**SERVICE NOT FOUND** - An invalid endpoint has being reached. Please check that the endpoint you are using to send the petitions is correct."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "hotelRS": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status of the result",
+            "example": "success",
+            "enum": [
+              "succes",
+              "error"
+            ]
+          },
+          "lang": {
+            "type": "string",
+            "description": "The language of the descriptions",
+            "example": "fr"
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of hotels",
+            "example": 1
+          },
+          "hotels": {
+            "type": "array",
+            "description": "Information regarding the hotels.",
+            "items": {
+              "$ref": "#/components/schemas/hotelsAPI"
+            }
+          }
+        }
+      },
+      "hotelsAPI": {
+        "type": "object",
+        "properties": {
+          "hotelId": {
+            "type": "integer",
+            "description": "Hotel identifier.",
+            "example": 3631
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the hotel.",
+            "example": "Delfino Beach Resort & Spa"
+          },
+          "rating": {
+            "type": "number",
+            "description": "Rating value.",
+            "example": 4
+          },
+          "marketingText": {
+            "type": "string",
+            "description": "Marketing description",
+            "example": "Couples & Familles"
+          },
+          "lat": {
+            "type": "number",
+            "description": "Latitude coordinate of the hotel location.",
+            "example": 36.427042
+          },
+          "long": {
+            "type": "number",
+            "description": "Longitude coordinate of the hotel location.",
+            "example": 10.682870999999977
+          },
+          "score": {
+            "type": "number",
+            "example": 3
+          },
+          "address": {
+            "type": "string",
+            "description": "Address of the hotel",
+            "example": "Mrezga"
+          },
+          "cityId": {
+            "type": "integer",
+            "description": "Identifier of the city of the hotel location.",
+            "example": 3
+          },
+          "countryId": {
+            "type": "integer",
+            "description": "Identifier of the country of the hotel location.",
+            "example": 2
+          },
+          "zoneId": {
+            "type": "integer",
+            "description": "Identifier of the zone of the hotel location."
+          },
+          "hotelChainId": {
+            "type": "integer",
+            "description": "Identifier of the hotel chain.",
+            "example": 9
+          },
+          "photos": {
+            "type": "array",
+            "description": "Hotel photos",
+            "items": {
+              "$ref": "#/components/schemas/photos"
+            }
+          },
+          "themes": {
+            "type": "array",
+            "description": "List of themes codes in the hotel.",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "facilities": {
+            "type": "array",
+            "description": "List of facilities, amenities and installations in the hotel.",
+            "items": {
+              "type": "string",
+              "example": "[\"Air conditionné\",\"Bien être\",\"Club enfants\",\"Golf\",\"Parking\",\"Piscine\",\"Piscine couverte\",\"Plage\",\"Restaurant\",\"Wifi Internet sans fil\"]"
+            }
+          },
+          "descriptions": {
+            "type": "array",
+            "description": "Hotel description.",
+            "items": {
+              "$ref": "#/components/schemas/descriptions"
+            }
+          }
+        }
+      },
+      "photos": {
+        "type": "object"
+      },
+      "descriptions": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of hotel description",
+            "example": ""
+          },
+          "text": {
+            "type": "string",
+            "description": "description text",
+            "example": "Delfino Beach Resort & Spa<br /><br />L'hôtel 4*, construit dans un style mauresque typique, se situe près de Hammamet (à 6 Km du centre de Hammamet et 6 Km de Nabeul), au cœur d'un jardin de 100.000 m². <br />Directement en bord de mer sur une plage de fin sable blanc.<br/><br />L'aéroport de Tunis est à ~ 65 Km, et l'aéroport d'Enfidha est à ~60 km.<br />De nombreux loisirs et activités sont à votre disposition, pour agrémenter votre séjour :<br />3 piscines extérieures (dont et une « relax-pool » réservée aux adultes) et une piscine intérieure (chauffée hors-saison).<br/>Un centre de remise en forme, comprenant une piscine couverte, salle de fitness et de dance, salle de musculation, Cabines de massage, un Hammam, Saunas, Cabines Esthétiques, une salle de relaxation.<br />Pour les petits, un Mini-Club : Plusieurs salles de jeux et d'activités, salle de sieste, toilettes adaptées, cuisine, Piscine pour enfant, jardin et air de jeux. Egalement une salle à manger 7 pour famille avec buffets « Enfants ».<br />Disponible aussi : Salle de réunion, Boutiques et petit commerce, Scène de théâtre en plein-air, une salle de spectacle couverte, Discothèque Night-club.<br/>Internet: Wi-Fi haut-débit à la réception (gratuit).<br />Le DELFINO BEACH offre une animationriche et variée, de jour comme de nuit. Un programme quotidien d'activités sportives, de divertissements, et de spectacles:<br />Beach-volley, tir à l'arc, centre de remise en forme, Fitness,marche nordique, aérobic, inline skating<br />Tennis: 10 courts en terre-battue. Leçons de tennis (cours collectifs). <br />Base nautique: catamarans Hobbies Cat, planches à voile et canoës. Cours et initiation.<br />Sport nautique à moteur (Ski nautique et banana-Boat)<br />Aussi: Beach soccer,Street-Ball, tennis de table, terrain de foot en gazon synthétique."
+          },
+          "large": {
+            "type": "string",
+            "example": ""
+          },
+          "small": {
+            "type": "string",
+            "example": ""
+          }
+        }
+      },
+      "roomsRS": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status of the result",
+            "example": "success",
+            "enum": [
+              "succes",
+              "error"
+            ]
+          },
+          "lang": {
+            "type": "string",
+            "description": "The language of the descriptions",
+            "example": "fr"
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of rooms",
+            "example": 1
+          },
+          "rooms": {
+            "type": "array",
+            "description": "Information regarding the rooms.",
+            "items": {
+              "$ref": "#/components/schemas/roomDetails"
+            }
+          }
+        }
+      },
+      "roomDetails": {
+        "type": "object",
+        "properties": {
+          "roomId": {
+            "type": "integer",
+            "description": "Room identifier",
+            "example": 54869
+          },
+          "name": {
+            "type": "string",
+            "description": "Room name",
+            "example": "Hills villa"
+          },
+          "category": {
+            "type": "string"
+          },
+          "view": {
+            "type": "string",
+            "description": "the view of the room",
+            "example": ""
+          },
+          "minPax": {
+            "type": "integer",
+            "example": 1
+          },
+          "maxPax": {
+            "type": "integer",
+            "example": 3
+          },
+          "description": {
+            "type": "string",
+            "description": "description text of the room",
+            "example": "Vue Montagne - Chambre à l'extérieur du Bloc Central,             Superficie : 30 m² "
+          },
+          "photos": {
+            "type": "string",
+            "description": "photos of the room"
+          }
+        }
+      },
+      "countryRS": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status of the result",
+            "example": "success",
+            "enum": [
+              "success",
+              "error"
+            ]
+          },
+          "countries": {
+            "type": "array",
+            "description": "Information regarding the countries.",
+            "items": {
+              "$ref": "#/components/schemas/countriesDetails"
+            }
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of countries founded in the result",
+            "example": 1
+          },
+          "lang": {
+            "type": "string",
+            "description": "language used",
+            "example": "fr"
+          }
+        }
+      },
+      "countriesDetails": {
+        "type": "object",
+        "properties": {
+          "countryId": {
+            "type": "integer",
+            "description": "Country identifier.",
+            "example": 2
+          },
+          "name": {
+            "type": "string",
+            "description": "Country name",
+            "example": "Tunisie"
+          }
+        }
+      },
+      "cityRS": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status of the result",
+            "example": "success",
+            "enum": [
+              "success",
+              "error"
+            ]
+          },
+          "countryId": {
+            "type": "integer",
+            "description": "Country identifier",
+            "example": 2
+          },
+          "countries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/citiesDetails"
+            }
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of cities",
+            "example": 1
+          },
+          "lang": {
+            "type": "string",
+            "description": "language used",
+            "example": "fr"
+          }
+        }
+      },
+      "citiesDetails": {
+        "type": "object",
+        "properties": {
+          "cityId": {
+            "type": "integer",
+            "description": "City identifier.",
+            "example": 3
+          },
+          "name": {
+            "type": "string",
+            "description": "City name.",
+            "example": "Hammamet"
+          }
+        }
+      },
+      "hotelthemeRS": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status of the result",
+            "example": "success",
+            "enum": [
+              "success",
+              "error"
+            ]
+          },
+          "themes": {
+            "type": "array",
+            "description": "Information regarding the hotel themes.",
+            "items": {
+              "$ref": "#/components/schemas/themesDetails"
+            }
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of hotel themes",
+            "example": 1
+          },
+          "lang": {
+            "type": "string",
+            "description": "language used",
+            "example": "fr"
+          }
+        }
+      },
+      "themesDetails": {
+        "type": "object",
+        "properties": {
+          "themeId": {
+            "type": "integer",
+            "description": "Hotel Theme identifier",
+            "example": 28
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the hotel theme",
+            "example": "Jeunes"
+          }
+        }
+      },
+      "hoteltchainRS": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status of the result",
+            "example": "success",
+            "enum": [
+              "success",
+              "error"
+            ]
+          },
+          "chains": {
+            "type": "array",
+            "description": "Information regarding the hotel chains.",
+            "items": {
+              "$ref": "#/components/schemas/chainsDetails"
+            }
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of hotel chains",
+            "example": 1
+          },
+          "lang": {
+            "type": "string",
+            "description": "Language used",
+            "example": "fr"
+          }
+        }
+      },
+      "chainsDetails": {
+        "type": "object",
+        "properties": {
+          "hotelChainId": {
+            "type": "integer",
+            "description": "Hotel chain identifier",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the hotel chain",
+            "example": "Marhaba Hôtels"
+          }
+        }
+      },
+      "availabilityRS": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "description": "Total of hotels returned in the current availability response",
+            "example": 1
+          },
+          "searchCode": {
+            "type": "string",
+            "description": "The serach code of the request",
+            "example": "31777729-fa16-3e77-e06a3f05834c927a"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of the result",
+            "example": "success",
+            "enum": [
+              "success",
+              "error"
+            ]
+          },
+          "hotels": {
+            "type": "array",
+            "description": "Information regarding the hotels.",
+            "items": {
+              "$ref": "#/components/schemas/ApiHotels"
+            }
+          },
+          "checkIn": {
+            "type": "string",
+            "description": "Check-in date",
+            "format": "date"
+          },
+          "checkOut": {
+            "type": "string",
+            "description": "Check-out date",
+            "format": "date"
+          },
+          "nights": {
+            "type": "integer",
+            "description": "Number of nights",
+            "example": 3
+          },
+          "partnerId": {
+            "type": "integer",
+            "description": "Partner identifier",
+            "example": 14258
+          },
+          "partnerName": {
+            "type": "string",
+            "example": "Partner name"
+          },
+          "professionalId": {
+            "type": "integer",
+            "description": "Professional identifier",
+            "example": 50
+          },
+          "professionalName": {
+            "type": "string",
+            "example": "Professional name"
+          },
+          "datetime": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "ApiHotels": {
+        "type": "object",
+        "properties": {
+          "hotelId": {
+            "type": "integer",
+            "description": "Hotel identifier",
+            "example": 16958
+          },
+          "name": {
+            "type": "string",
+            "description": "Hotel Name",
+            "example": "Tui Magic Life Africana"
+          },
+          "rating": {
+            "type": "integer",
+            "description": "Rating value",
+            "example": 5
+          },
+          "address": {
+            "type": "string",
+            "description": "Address of the hotel",
+            "example": ""
+          },
+          "score": {
+            "type": "integer",
+            "example": 5
+          },
+          "hotelChainId": {
+            "type": "integer",
+            "description": "Identifier of the hotel chain",
+            "example": 17
+          },
+          "accTypeId": {
+            "type": "integer",
+            "example": 1
+          },
+          "city": {
+            "type": "string",
+            "description": "City name",
+            "example": "Hammamet"
+          },
+          "cityId": {
+            "type": "integer",
+            "description": "City identifier",
+            "example": 3
+          },
+          "zoneId": {
+            "type": "integer",
+            "description": "Zone identifier",
+            "example": 90
+          },
+          "zone": {
+            "type": "string",
+            "description": "Zone name",
+            "example": ""
+          },
+          "country": {
+            "type": "string",
+            "description": "Country name",
+            "example": "Tunisie"
+          },
+          "countryId": {
+            "type": "integer",
+            "description": "Country identifier"
+          },
+          "lat": {
+            "type": "number",
+            "description": "Latitude coordinate of the hotel location",
+            "example": 36.357858
+          },
+          "long": {
+            "type": "number",
+            "description": "Longitude coordinate of the hotel location",
+            "example": 10.531967
+          },
+          "marketingText": {
+            "type": "string",
+            "description": "Marketing description",
+            "example": ""
+          },
+          "minRate": {
+            "type": "number",
+            "description": "Minimum hotel room price",
+            "example": 561.33
+          },
+          "maxRate": {
+            "type": "number",
+            "description": "Maximum hotel room price",
+            "example": 570.33
+          },
+          "currency": {
+            "type": "string",
+            "description": "Client currency",
+            "example": "TND"
+          },
+          "rooms": {
+            "type": "array",
+            "description": "List of available rooms",
+            "items": {
+              "$ref": "#/components/schemas/ApiRooms"
+            }
+          },
+          "photos": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "https://1915023314.rsc.cdn77.org/photos/17029/hotel (1).jpg"
+            }
+          }
+        }
+      },
+      "ApiRooms": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "Internal room code",
+            "example": 58253
+          },
+          "name": {
+            "type": "string",
+            "description": "Room name/description",
+            "example": "Promo room"
+          },
+          "rates": {
+            "type": "array",
+            "description": "List of rates associated to the room",
+            "items": {
+              "$ref": "#/components/schemas/ApiRates"
+            }
+          }
+        }
+      },
+      "ApiRates": {
+        "type": "object",
+        "properties": {
+          "rateKey": {
+            "type": "string",
+            "description": "Internal key that represents a combination of room type, category, board and occupancy. Is returned in Availability and used to valuate a rate and confirm a booking",
+            "example": "20191110|20191113|16958|3|58253|5|1|2~0~|xxx"
+          },
+          "amountWithoutPromotion": {
+            "type": "string",
+            "description": "price without reduction",
+            "example": "10043.712"
+          },
+          "rateClass": {
+            "type": "string",
+            "description": "Class of the rate",
+            "example": "NOR"
+          },
+          "contractId": {
+            "type": "integer",
+            "description": "Contract identifier",
+            "example": 3
+          },
+          "rateType": {
+            "type": "string"
+          },
+          "paymentType": {
+            "type": "string",
+            "description": "Defines the type of payment accepted",
+            "example": "AT_WEB"
+          },
+          "allotment": {
+            "type": "integer",
+            "description": "Number of rooms available for a particular room type.",
+            "example": 0
+          },
+          "availability": {
+            "type": "string",
+            "description": "The Availability code",
+            "enum": [
+              "A",
+              "S",
+              "R"
+            ]
+          },
+          "amount": {
+            "type": "number",
+            "description": "Monetary amount",
+            "example": 561.33
+          },
+          "boardCode": {
+            "type": "integer",
+            "description": "Internal board code",
+            "example": 5
+          },
+          "boardName": {
+            "type": "string",
+            "description": "Internal board name",
+            "example": "tous inclus*"
+          },
+          "cancellationPolicies": {
+            "type": "array",
+            "description": "List of cancellation policies on the rate.",
+            "items": {
+              "$ref": "#/components/schemas/cancellationPolicies"
+            }
+          },
+          "offers": {
+            "type": "array",
+            "description": "List of offers on the rate.",
+            "example": [],
+            "items": {
+              "type": "string"
+            }
+          },
+          "promotions": {
+            "type": "array",
+            "description": "List of promotions.",
+            "items": {
+              "type": "string",
+              "example": "[]"
+            }
+          },
+          "supplements": {
+            "type": "array",
+            "description": "List of supplements",
+            "items": {
+              "type": "string",
+              "example": "[]"
+            }
+          },
+          "taxes": {
+            "type": "array",
+            "description": "information of taxes",
+            "items": {
+              "$ref": "#/components/schemas/taxes"
+            }
+          },
+          "rooms": {
+            "type": "integer",
+            "description": "Number of rooms requested",
+            "example": 1
+          },
+          "adults": {
+            "type": "integer",
+            "description": "Number of adults requested for each room",
+            "example": 2
+          },
+          "children": {
+            "type": "integer",
+            "description": "Number of children requested for each room"
+          },
+          "infant": {
+            "type": "integer",
+            "description": "Number of infant",
+            "example": 1
+          },
+          "childrenAges": {
+            "type": "string",
+            "description": "Ages of the children (if any)"
+          }
+        }
+      },
+      "cancellationPolicies": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "description": "Penalty that will be charged for cancellations after the indicated date, represented as a monetary amount",
+            "example": 561.33
+          },
+          "from": {
+            "type": "string",
+            "description": "Date from which the penalties are applied",
+            "format": "date",
+            "example": "2019-08-24"
+          }
+        }
+      },
+      "taxes": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Taxe name",
+            "example": "Taxe de s&eacute;jour"
+          },
+          "amount": {
+            "type": "integer",
+            "description": "Value of the tax in hotel currency if the tax is not included in the price",
+            "example": 42
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency of the tax amount",
+            "example": "TND"
+          },
+          "included": {
+            "type": "boolean",
+            "description": "Indicates if the tax is included in the price or not",
+            "example": false
+          }
+        }
+      },
+      "checkRateRS": {
+        "type": "object",
+        "properties": {
+          "searchCode": {
+            "type": "string",
+            "description": "The search code of the hotel",
+            "example": "844014d5-3417-ebbf-fb1b251694b71111"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of the result",
+            "example": "success",
+            "enum": [
+              "success",
+              "error"
+            ]
+          },
+          "dateTime": {
+            "type": "string",
+            "format": "date"
+          },
+          "checkIn": {
+            "type": "string",
+            "description": "Check-in date",
+            "format": "date"
+          },
+          "checkOut": {
+            "type": "string",
+            "description": "Check-out date",
+            "format": "date"
+          },
+          "host": {
+            "type": "string",
+            "example": "127.0.0.1"
+          },
+          "nights": {
+            "type": "integer",
+            "description": "Number of nights",
+            "example": 1
+          },
+          "hotel": {
+            "$ref": "#/components/schemas/checkRateRS_hotel"
+          }
+        }
+      },
+      "supplements": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Supplement name/description",
+            "example": "Diner Noel Obligatoire le 24/12/2020"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Amount of the supplement",
+            "example": 300
+          },
+          "currency": {
+            "type": "string",
+            "description": "Client currency",
+            "example": "TND"
+          },
+          "included": {
+            "type": "boolean",
+            "description": "Indicates if the supplement is included in the price or not."
+          }
+        },
+        "description": "Information regarding the supplements."
+      },
+      "rooms": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "Internal room code",
+            "example": 42115
+          },
+          "name": {
+            "type": "string",
+            "description": "Room name/description",
+            "example": "Standard Triple Standard Vue Jardin"
+          },
+          "rates": {
+            "type": "array",
+            "description": "List of rates associated to the room",
+            "items": {
+              "$ref": "#/components/schemas/roomsRate"
+            }
+          }
+        }
+      },
+      "roomsRate": {
+        "type": "object",
+        "properties": {
+          "rateKey": {
+            "type": "string",
+            "description": "Internal key that represents a combination of room type, category, board and occupancy. Is returned in Availability and used to valuate a rate and confirm a booking",
+            "example": "20191111|20191112|16946|3|42115|5|1|1~2~8,5|xxx"
+          },
+          "rateClass": {
+            "type": "string",
+            "description": "Class of the rate",
+            "example": "NOR"
+          },
+          "contractId": {
+            "type": "integer",
+            "description": "Contract identifier",
+            "example": 3
+          },
+          "rateType": {
+            "type": "string"
+          },
+          "paymentType": {
+            "type": "string",
+            "description": "Defines the type of payment accepted",
+            "example": "AT_WEB"
+          },
+          "allotment": {
+            "type": "integer",
+            "description": "Number of rooms available for a particular room type",
+            "example": 0
+          },
+          "availability": {
+            "type": "string",
+            "example": "A"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Monetary amount",
+            "example": 1260.234
+          },
+          "boardId": {
+            "type": "integer",
+            "description": "Board identifier",
+            "example": 5
+          },
+          "boardName": {
+            "type": "string",
+            "description": "Board name",
+            "example": "Tout inclus"
+          },
+          "cancellationPolicies": {
+            "type": "array",
+            "description": "List of cancellation policies on the rate",
+            "items": {
+              "$ref": "#/components/schemas/cancellationPolicies"
+            }
+          },
+          "taxe": {
+            "type": "array",
+            "description": "Information of taxes",
+            "items": {
+              "$ref": "#/components/schemas/taxes"
+            }
+          },
+          "rooms": {
+            "type": "integer",
+            "description": "Number of rooms requested",
+            "example": 1
+          },
+          "adults": {
+            "type": "integer",
+            "description": "Number of adults requested for each room",
+            "example": 1
+          },
+          "children": {
+            "type": "integer",
+            "description": "Number of children requested for each room",
+            "example": 2
+          },
+          "infant": {
+            "type": "integer",
+            "description": "Number of infant",
+            "example": 0
+          },
+          "childrenAges": {
+            "type": "string",
+            "description": "Ages of the children (if any)",
+            "example": "8-5"
+          },
+          "offers": {
+            "type": "array",
+            "description": "List of offers on the rate.",
+            "example": [],
+            "items": {
+              "type": "string"
+            }
+          },
+          "total": {
+            "type": "number",
+            "description": "Total of hotels returned in the current availability response",
+            "example": 1
+          },
+          "currency": {
+            "type": "string",
+            "description": "Client currency",
+            "example": "TND"
+          }
+        }
+      },
+      "checkRateRQ": {
+        "type": "object",
+        "properties": {
+          "rooms": {
+            "type": "array",
+            "description": "List of rooms to be checked",
+            "items": {
+              "$ref": "#/components/schemas/ratekey"
+            }
+          },
+          "searchCode": {
+            "type": "string",
+            "description": "The code of the search obtained from the Availability response and used to confirm a booking.\n",
+            "example": "844014d5-3417-ebbf-fb1b251694b71111"
+          },
+          "langId": {
+            "type": "integer",
+            "description": "Language identifier in which the description texts will be returned in the response\n",
+            "example": 1
+          }
+        }
+      },
+      "ratekey": {
+        "type": "object",
+        "properties": {
+          "ratekey": {
+            "type": "string",
+            "description": "Internal key that represents a combination of room type, category, board and occupancy. Is returned in Availability and used and confirm a booking\n",
+            "example": "20191111|20191112|16946|3|42115|5|1|1~2~8,5|xxx"
+          }
+        }
+      },
+      "bookRS": {
+        "type": "object",
+        "properties": {
+          "searchCode": {
+            "type": "string",
+            "description": "The serach code",
+            "example": "844014d5-3417-ebbf-fb1b251694b71111"
+          },
+          "status": {
+            "type": "string",
+            "description": "Current status of the booking",
+            "example": "success",
+            "enum": [
+              "CONFIRMED",
+              "PENDING"
+            ]
+          },
+          "dateTime": {
+            "type": "string",
+            "format": "date"
+          },
+          "checkIn": {
+            "type": "string",
+            "description": "Check-in date",
+            "format": "date"
+          },
+          "checkOut": {
+            "type": "string",
+            "description": "Check-out date",
+            "format": "date"
+          },
+          "host": {
+            "type": "string",
+            "example": "127.0.0.1"
+          },
+          "booking": {
+            "$ref": "#/components/schemas/bookRS_booking"
+          }
+        }
+      },
+      "holder": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "Booking passenger name for all the rooms of the booking",
+            "example": "test"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Booking passenger last name for all rooms of the booking.",
+            "example": "test"
+          }
+        }
+      },
+      "room": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "Internal room code",
+            "example": 42115
+          },
+          "name": {
+            "type": "string",
+            "description": "Room name/description",
+            "example": "Standard Triple Standard Vue Jardin"
+          },
+          "rates": {
+            "type": "array",
+            "description": "List of rates associated to the room",
+            "items": {
+              "$ref": "#/components/schemas/rates"
+            }
+          },
+          "total": {
+            "type": "number",
+            "description": "Total amount",
+            "example": 955.84
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency of the monetary amount",
+            "example": "TND"
+          }
+        }
+      },
+      "rates": {
+        "type": "object",
+        "properties": {
+          "rateClass": {
+            "type": "string",
+            "description": "Class of the rate",
+            "example": "NOR"
+          },
+          "contractId": {
+            "type": "integer",
+            "description": "Contract identifier",
+            "example": 3
+          },
+          "rateType": {
+            "type": "string",
+            "description": "Determines if can booked directly (BOOKABLE) or if it needs to be checked with the ‘CheckRate’ operation (RECHECK).",
+            "example": "BOOKABLE",
+            "enum": [
+              "BOOKABLE",
+              "RECHECK"
+            ]
+          },
+          "paymentType": {
+            "type": "string",
+            "description": "Defines the type of payment accepted",
+            "example": "AT_WEB"
+          },
+          "allotment": {
+            "type": "integer",
+            "description": "Number of rooms available for a particular room type",
+            "example": 0
+          },
+          "availability": {
+            "type": "string",
+            "example": "R|1"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Monetary amount",
+            "example": 360
+          },
+          "boardId": {
+            "type": "integer",
+            "description": "Board identifier",
+            "example": 5
+          },
+          "boardName": {
+            "type": "string",
+            "description": "Board name",
+            "example": "tout inclus"
+          },
+          "cancellationPolicies": {
+            "type": "array",
+            "description": "List of cancellation policies on the rate",
+            "items": {
+              "$ref": "#/components/schemas/cancellationPolicie"
+            }
+          },
+          "taxe": {
+            "type": "array",
+            "example": [],
+            "items": {
+              "type": "string",
+              "description": "Information of taxes"
+            }
+          },
+          "rooms": {
+            "type": "integer",
+            "description": "Number of rooms requested",
+            "example": 1
+          },
+          "adults": {
+            "type": "integer",
+            "description": "Number of adults requested for each room",
+            "example": 1
+          },
+          "children": {
+            "type": "integer",
+            "description": "Number of children requested for each room",
+            "example": 2
+          },
+          "infant": {
+            "type": "integer",
+            "description": "Number of infant",
+            "example": 0
+          },
+          "childrenAges": {
+            "type": "string",
+            "description": "Ages of the children (if any)",
+            "example": "2-3"
+          },
+          "offers": {
+            "type": "array",
+            "description": "List of offers on the rate",
+            "example": [],
+            "items": {
+              "type": "string"
+            }
+          },
+          "distributorMargin": {
+            "type": "integer",
+            "description": "Profit margin that the agency would take if it sells at that recommended price.",
+            "example": 36
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency of the monetary amount",
+            "example": "TND"
+          },
+          "tva": {
+            "type": "integer",
+            "description": "value-added tax",
+            "example": 0
+          },
+          "rateComments": {
+            "type": "string",
+            "description": "rate description",
+            "example": "<h4>\\r\\n\\tTaxe de S&eacute;jour:&nbsp;</h4>\\r\\n<div>\\r\\n\\t<strong>Une taxe touristique de s&eacute;jour est appliqu&eacute;e &agrave; tous les clients (+12 ans) par nuit&eacute;e, payable par le client &agrave; son d&eacute;part de l&rsquo;h&ocirc;tel contre un re&ccedil;u de 2 DT/nuit&eacute;e/Adulte (pour h&ocirc;tel 2* et 3*) et 3 DT/nuit&eacute;e/Adulte (pour h&ocirc;tel 4* et 5*) . Cette taxe n&#39;est pas applicable &agrave; partir de la 8&egrave;me nuit&eacute;e.</strong></div>\\r\\n"
+          }
+        }
+      },
+      "cancellationPolicie": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "description": "Penalty that will be charged for cancellations after the indicated date, represented as a monetary amount",
+            "example": 396
+          },
+          "from": {
+            "type": "string",
+            "description": "Date from which the penalties are applied",
+            "format": "date"
+          }
+        }
+      },
+      "bookRQ": {
+        "type": "object",
+        "properties": {
+          "holder": {
+            "$ref": "#/components/schemas/bookRQ_holder"
+          },
+          "rooms": {
+            "type": "array",
+            "description": "List of the rooms to be included in the booking .",
+            "items": {
+              "$ref": "#/components/schemas/RoomsDetails"
+            }
+          },
+          "apikey": {
+            "type": "string",
+            "description": "The API Key\n",
+            "example": "53e2c390-c81f-66f5-a6933ef8172f3832"
+          },
+          "searchCode": {
+            "type": "string",
+            "description": "The code of the search\n",
+            "example": "844014d5-3417-ebbf-fb1b251694b71111"
+          },
+          "langId": {
+            "type": "integer",
+            "description": "Language reference number  in which the description texts will be returned in the response\n",
+            "example": 1
+          },
+          "remark": {
+            "type": "string",
+            "description": "Note\n",
+            "example": "Une belle chambre vip svp"
+          }
+        }
+      },
+      "RoomsDetails": {
+        "type": "object",
+        "properties": {
+          "ratekey": {
+            "type": "string",
+            "description": "The rate key of the room\n",
+            "example": "20191111|20191112|16946|3|42115|5|1|1~2~8,5|xxx"
+          },
+          "paxes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/paxesDetails"
+            }
+          }
+        }
+      },
+      "paxesDetails": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "The first name of the passenger.\n",
+            "example": "test"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The last name of the passenger.\n",
+            "example": "test"
+          },
+          "type": {
+            "type": "string",
+            "description": "Passenger type, defines if the passenger is adult or\n child.\n",
+            "example": "AD",
+            "enum": [
+              "AD",
+              "CH"
+            ]
+          },
+          "age": {
+            "type": "integer",
+            "description": "Age of the passenger (required for children passengers).",
+            "example": 3
+          },
+          "title": {
+            "type": "string",
+            "description": "Civility of the passenger",
+            "example": "Mlle",
+            "enum": [
+              "Mr",
+              "Mme",
+              "Mlle"
+            ]
+          }
+        }
+      },
+      "searchRS": {
+        "type": "object",
+        "properties": {
+          "bookings": {
+            "type": "array",
+            "description": "The Booking object. Contains all data related with the booking itself",
+            "items": {
+              "$ref": "#/components/schemas/booking"
+            }
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of the result",
+            "example": "success",
+            "enum": [
+              "success",
+              "error"
+            ]
+          }
+        }
+      },
+      "booking": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Current status of the booking",
+            "example": "Not available",
+            "enum": [
+              "Canceled",
+              "Not available",
+              "Confirmed"
+            ]
+          },
+          "statusId": {
+            "type": "integer",
+            "description": "Status identifier",
+            "example": 7
+          },
+          "bookingId": {
+            "type": "integer",
+            "description": "Booking identifier",
+            "example": 473614
+          },
+          "bookingRef": {
+            "type": "string",
+            "description": "Booking reference",
+            "example": "VO20190102821"
+          },
+          "createdDate": {
+            "type": "string",
+            "description": "Booking creation date",
+            "format": "date-time",
+            "example": "2020-07-14T12:48:26.467Z"
+          },
+          "confirmedDate": {
+            "type": "string",
+            "description": "Booking confirmation date",
+            "format": "date"
+          },
+          "hotelId": {
+            "type": "integer",
+            "description": "Hotel identifier",
+            "example": 17059
+          },
+          "hotelName": {
+            "type": "string",
+            "description": "Hotel name",
+            "example": "Steigenberger Marhaba Palace & Thalasso Hammamet 5*"
+          },
+          "hotelCity": {
+            "type": "string",
+            "description": "City name of the hotel",
+            "example": "Hammamet"
+          },
+          "hotelCountry": {
+            "type": "string",
+            "description": "Country name of the hotel",
+            "example": "Tunisie"
+          },
+          "hotelAddress": {
+            "type": "string",
+            "description": "Hotel address",
+            "example": "Avenue Moncef Bey Hammamet"
+          },
+          "hotelPhone": {
+            "type": "string",
+            "description": "hotel phone",
+            "example": "27226555"
+          },
+          "arrDate": {
+            "type": "string",
+            "description": "Arrival date",
+            "format": "date",
+            "example": "2019-01-02"
+          },
+          "depDate": {
+            "type": "string",
+            "description": "Departure date",
+            "format": "date",
+            "example": "2019-01-03"
+          },
+          "Price": {
+            "type": "integer",
+            "description": "Sales price"
+          },
+          "Currency": {
+            "type": "string",
+            "description": "Client currency",
+            "example": ""
+          },
+          "purchasePrice": {
+            "type": "integer",
+            "description": "Purchase price"
+          },
+          "cancelDeadline": {
+            "type": "string",
+            "description": "Cancel deadline",
+            "format": "date"
+          },
+          "partnerId": {
+            "type": "integer",
+            "description": "Partner identifier",
+            "example": 9222
+          },
+          "partnerName": {
+            "type": "string",
+            "description": "Partner name",
+            "example": ""
+          },
+          "customerId": {
+            "type": "integer",
+            "description": "Customer identifier"
+          },
+          "title": {
+            "type": "string",
+            "example": ""
+          },
+          "firstName": {
+            "type": "string",
+            "description": "Customer first name",
+            "example": "test"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Customer last name",
+            "example": "test"
+          },
+          "email": {
+            "type": "string",
+            "description": "Customer email",
+            "example": ""
+          },
+          "mobile": {
+            "type": "string",
+            "description": "Customer mobile number",
+            "example": ""
+          },
+          "city": {
+            "type": "string",
+            "description": "City name",
+            "example": ""
+          },
+          "channel": {
+            "type": "string",
+            "description": "Channel type",
+            "example": "B2B"
+          },
+          "supplierId": {
+            "type": "integer",
+            "description": "Supplier identifier"
+          },
+          "supplierName": {
+            "type": "string",
+            "description": "Supplier name",
+            "example": ""
+          },
+          "isXML": {
+            "type": "boolean",
+            "example": false
+          },
+          "rooms": {
+            "type": "array",
+            "description": "List of rooms",
+            "items": {
+              "$ref": "#/components/schemas/roomsList"
+            }
+          },
+          "options": {
+            "type": "array",
+            "description": "Options information",
+            "example": [],
+            "items": {
+              "type": "string"
+            }
+          },
+          "paxes": {
+            "type": "array",
+            "description": "Paxes information",
+            "items": {
+              "$ref": "#/components/schemas/paxes"
+            }
+          },
+          "payments": {
+            "type": "array",
+            "description": "Supplier information",
+            "example": [],
+            "items": {
+              "type": "string"
+            }
+          },
+          "ip": {
+            "type": "array",
+            "description": "IP address of the end user",
+            "example": "196.203.53.99",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "roomsList": {
+        "type": "object",
+        "properties": {
+          "board": {
+            "type": "string",
+            "description": "Board name",
+            "example": "Demi pension"
+          },
+          "paxes": {
+            "type": "array",
+            "description": "List of paxes for the room",
+            "items": {
+              "$ref": "#/components/schemas/RoomsPaxes"
+            }
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "Rooms number",
+            "example": 1
+          },
+          "room": {
+            "type": "string",
+            "description": "Room name/description",
+            "example": "chambre double Supérieure Vue Jardin"
+          }
+        }
+      },
+      "paxes": {
+        "type": "object",
+        "properties": {
+          "lastName": {
+            "type": "string",
+            "description": "Last name of the passenger.",
+            "example": "test"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the paxe",
+            "example": ""
+          },
+          "firstName": {
+            "type": "string",
+            "description": "Firstname of the passenger",
+            "example": "test"
+          },
+          "paxType": {
+            "type": "string",
+            "description": "Type of the paxe",
+            "example": "AD"
+          },
+          "age": {
+            "type": "integer",
+            "description": "Age of the passenger"
+          }
+        }
+      },
+      "RoomsPaxes": {
+        "type": "object",
+        "properties": {
+          "adults": {
+            "type": "integer",
+            "description": "Number of adults requested for each room",
+            "example": 1
+          },
+          "children": {
+            "type": "integer",
+            "description": "Number of children requested for each room",
+            "example": 2
+          },
+          "infant": {
+            "type": "integer",
+            "description": "Number of infant",
+            "example": 0
+          }
+        }
+      },
+      "cancelRS": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status of the result",
+            "example": "success",
+            "enum": [
+              "success",
+              "error"
+            ]
+          },
+          "dateTime": {
+            "type": "string",
+            "format": "date"
+          },
+          "host": {
+            "type": "string",
+            "example": "127.0.0.1"
+          },
+          "booking": {
+            "$ref": "#/components/schemas/cancelRS_booking"
+          }
+        }
+      },
+      "checkRateRS_hotel": {
+        "type": "object",
+        "properties": {
+          "hotelId": {
+            "type": "integer",
+            "description": "Hotel identifier",
+            "example": 16946
+          },
+          "name": {
+            "type": "string",
+            "description": "Hotel Name",
+            "example": "Magic Hotels Royal Kenz"
+          },
+          "rating": {
+            "type": "integer",
+            "description": "Rating value",
+            "example": 4
+          },
+          "address": {
+            "type": "string",
+            "description": "Address of the hotel",
+            "example": "Port kantaoui Hammam Sousse"
+          },
+          "score": {
+            "type": "number",
+            "description": "Hotel review score",
+            "example": 4.5
+          },
+          "hotelChainId": {
+            "type": "integer",
+            "description": "Identifier of the hotel chain",
+            "example": 17
+          },
+          "accTypeId": {
+            "type": "integer",
+            "example": 1
+          },
+          "city": {
+            "type": "string",
+            "description": "City name",
+            "example": "sousse"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Client currency",
+            "example": "TND"
+          },
+          "cityId": {
+            "type": "integer",
+            "description": "City identifier",
+            "example": 12
+          },
+          "zoneId": {
+            "type": "integer",
+            "description": "Zone identifier"
+          },
+          "zone": {
+            "type": "string",
+            "description": "Zone name",
+            "example": ""
+          },
+          "country": {
+            "type": "string",
+            "description": "Country name",
+            "example": "Tunisie"
+          },
+          "countryId": {
+            "type": "integer",
+            "description": "Country identifier",
+            "example": 2
+          },
+          "lat": {
+            "type": "number",
+            "description": "Latitude coordinate of the hotel location",
+            "example": 35.9108191
+          },
+          "long": {
+            "type": "number",
+            "description": "Longitude coordinate of the hotel location",
+            "example": 10.5785691
+          },
+          "marketingText": {
+            "type": "string",
+            "description": "Marketing description",
+            "example": ""
+          },
+          "rooms": {
+            "type": "array",
+            "description": "List of rooms checked",
+            "items": {
+              "$ref": "#/components/schemas/rooms"
+            }
+          },
+          "supplements": {
+            "type": "array",
+            "description": "Information on supplements",
+            "items": {
+              "$ref": "#/components/schemas/supplements"
+            }
+          },
+          "total": {
+            "type": "number",
+            "description": "total amount",
+            "example": 2942.116
+          }
+        },
+        "description": "Information regarding the hotels"
+      },
+      "bookRS_booking_hotels": {
+        "type": "object",
+        "properties": {
+          "hotelId": {
+            "type": "integer",
+            "description": "Hotel identifier",
+            "example": 16946
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the hotel",
+            "example": "Magic Hotels Royal Kenz"
+          },
+          "rating": {
+            "type": "integer",
+            "description": "Rating value",
+            "example": 4
+          },
+          "address": {
+            "type": "string",
+            "description": "Address of the hotel",
+            "example": "Port kantaoui Hammam Sousse"
+          },
+          "score": {
+            "type": "number",
+            "description": "Hotel review score",
+            "example": 4.5
+          },
+          "hotelchainId": {
+            "type": "integer",
+            "description": "Identifier of the hotel chain",
+            "example": 17
+          },
+          "accTypeId": {
+            "type": "integer",
+            "example": 1
+          },
+          "city": {
+            "type": "string",
+            "description": "City name",
+            "example": "sousse"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Client currency",
+            "example": "TND"
+          },
+          "cityId": {
+            "type": "integer",
+            "description": "City identifier",
+            "example": 12
+          },
+          "zoneId": {
+            "type": "integer",
+            "description": "Zone identifier"
+          },
+          "zone": {
+            "type": "string",
+            "description": "Zone name",
+            "example": ""
+          },
+          "country": {
+            "type": "string",
+            "description": "Country name",
+            "example": "Tunisie"
+          },
+          "countryId": {
+            "type": "integer",
+            "description": "Country identifier",
+            "example": 2
+          },
+          "lat": {
+            "type": "number",
+            "description": "Latitude coordinate of the hotel location",
+            "example": 35.9108191
+          },
+          "long": {
+            "type": "number",
+            "description": "Longitude coordinate of the hotel location",
+            "example": 10.5785691
+          },
+          "marketingText": {
+            "type": "string",
+            "description": "Marketing description",
+            "example": ""
+          },
+          "rooms": {
+            "type": "array",
+            "description": "List of rooms checked",
+            "items": {
+              "$ref": "#/components/schemas/room"
+            }
+          },
+          "supplements": {
+            "type": "array",
+            "description": "Information on supplements",
+            "items": {
+              "$ref": "#/components/schemas/supplements"
+            }
+          }
+        },
+        "description": "Information regarding the hotels"
+      },
+      "bookRS_booking": {
+        "type": "object",
+        "properties": {
+          "bookingId": {
+            "type": "integer",
+            "description": "Booking identifier. The same bookingId can be used even to identify the booking, to read and/or cancel the booking.",
+            "example": 555208
+          },
+          "bookingRef": {
+            "type": "string",
+            "description": "Booking reference",
+            "example": "VO20191107521"
+          },
+          "secondRef": {
+            "type": "string",
+            "example": ""
+          },
+          "status": {
+            "type": "string",
+            "description": "Current status of the booking",
+            "example": "PENDING"
+          },
+          "holder": {
+            "type": "array",
+            "description": "Information of the passenger of the booking",
+            "items": {
+              "$ref": "#/components/schemas/holder"
+            }
+          },
+          "hotels": {
+            "$ref": "#/components/schemas/bookRS_booking_hotels"
+          }
+        },
+        "description": "The Booking object. Contains all data related with the booking itself."
+      },
+      "bookRQ_holder": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "The first name of the passenger.\n",
+            "example": "test"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The last name of the passenger.\n",
+            "example": "test"
+          }
+        },
+        "description": "Information of the holder"
+      },
+      "cancelRS_booking_hotel": {
+        "type": "object",
+        "properties": {
+          "hotelId": {
+            "type": "integer",
+            "description": "Hotel identifier",
+            "example": 4145
+          },
+          "name": {
+            "type": "string",
+            "description": "Hotel name",
+            "example": "Eden Yasmine 4*"
+          }
+        },
+        "description": "Hotel information"
+      },
+      "cancelRS_booking": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Current status of the booking",
+            "example": "CANCELLED",
+            "enum": [
+              "CONFIRMED",
+              "CANCELLED"
+            ]
+          },
+          "statusId": {
+            "type": "integer",
+            "description": "Status identifier",
+            "example": 3
+          },
+          "bookingId": {
+            "type": "integer",
+            "description": "Booking identifier",
+            "example": 487332
+          },
+          "bookingRef": {
+            "type": "string",
+            "description": "Booking reference",
+            "example": "VO20190300000"
+          },
+          "cancelledDate": {
+            "type": "string",
+            "description": "Booking cancellation date",
+            "format": "date"
+          },
+          "cancellationFee": {
+            "type": "integer",
+            "description": "The cancellation fees",
+            "example": 0
+          },
+          "hotel": {
+            "$ref": "#/components/schemas/cancelRS_booking_hotel"
+          }
+        },
+        "description": "The Booking object. Contains all data related with the booking itself"
+      }
+    },
+    "securitySchemes": {
+      "apiKey": {
+        "type": "apiKey",
+        "description": "Your registered apikey.\n\n \n  There is a simple step to starting development with Booster BC API.You must request an apiKey from [https://support.boosterbc.com]() .\n",
+        "name": "apiKey",
+        "in": "header"
+      },
+      "Signature": {
+        "type": "apiKey",
+        "description": "SHA-512 encoding signature.\n\n Your signature value is the SHA-512 hash of the concatenation of your API Key + Password + UTC timestamp in seconds.\n",
+        "name": "signature",
+        "in": "header"
+      },
+      "Timestamp": {
+        "type": "apiKey",
+        "description": "UTC timestamp in seconds .\n\nYour timestamp value must be the same value used to generate your signature. If a different timestamp value is provided, your request will be rejected\n",
+        "name": "timestamp",
+        "in": "header"
+      }
+    }
+  }
+}

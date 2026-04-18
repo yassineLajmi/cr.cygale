@@ -1,0 +1,28 @@
+<HotelSearchREQ>
+<Credential>
+<Login>eOLiOpQrzcofOoB5KT7pJQ==</Login>
+<Password>QuCcKKK93ZaLXjiO5QvtJA==</Password>
+</Credential>
+    <SearchDetails>
+        <BookingDetails>
+            <User>9032</User>
+            <Language>1</Language>
+             <FromDate>21/04/2026</FromDate>
+             <ToDate>27/04/2026</ToDate>
+            <IdCity>104</IdCity>
+            <timeout></timeout>
+            <Rooms>
+                <Room>
+                    <Pax>
+                        <Adult>2</Adult>
+                        <Child age="">0</Child>
+                    </Pax>
+                </Room>
+               </Rooms>
+        </BookingDetails>
+        <Filters>
+            <ItemsPerPage>1000</ItemsPerPage>
+            <PageNumber>1</PageNumber>
+        </Filters>
+    </SearchDetails>
+</HotelSearchREQ>
