@@ -1,0 +1,30 @@
+## .NET build output
+bin/
+obj/
+out/
+publish/
+
+## Logs produced at runtime
+logs/
+
+## IDE & user files
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userprefs
+*.DS_Store
+*.swp
+Thumbs.db
+
+## Local overrides
+appsettings.Local.json
+appsettings.*.Local.json
+.env
+.env.local
+
+## NuGet
+*.nupkg
+*.snupkg
+.nuget/
