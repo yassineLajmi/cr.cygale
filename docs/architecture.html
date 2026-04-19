@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cyberesa ⇄ BoosterBC Bridge — Architecture</title>
+<style>
+  :root {
+    --bg: #0b1020;
+    --bg-alt: #0f1629;
+    --panel: #131b30;
+    --panel-2: #1a2340;
+    --border: #2a3558;
+    --text: #e6edff;
+    --muted: #94a3c4;
+    --accent: #7c9cff;
+    --accent-2: #6ae3c4;
+    --warn: #ffb86b;
+    --danger: #ff7a90;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif; line-height: 1.55; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .hero {
+    background:
+      radial-gradient(1200px 400px at 10% -10%, rgba(124,156,255,.25), transparent 60%),
+      radial-gradient(1000px 400px at 100% 0%, rgba(106,227,196,.18), transparent 60%),
+      linear-gradient(180deg, #0e1530 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 64px 24px 48px;
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; }
+  .badge {
+    display: inline-block; padding: 4px 10px; border-radius: 999px;
+    background: rgba(124,156,255,.15); color: var(--accent);
+    font-size: 12px; font-weight: 600; letter-spacing: .4px;
+    border: 1px solid rgba(124,156,255,.3);
+  }
+  .hero h1 { font-size: 38px; margin: 12px 0 8px; letter-spacing: -0.02em; }
+  .hero p.lead { color: var(--muted); max-width: 760px; font-size: 17px; }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+  section { margin: 40px 0; }
+  h2 { font-size: 24px; margin: 0 0 4px; letter-spacing: -.01em; }
+  h2 .tag { font-size: 12px; font-weight: 600; color: var(--accent-2); background: rgba(106,227,196,.12); padding: 3px 8px; border-radius: 6px; margin-left: 10px; vertical-align: middle; }
+  h3 { font-size: 17px; margin: 24px 0 8px; color: var(--accent); }
+  p { color: #cfd7ee; }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 800px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  code, pre { font-family: var(--mono); }
+  code.inline { background: rgba(124,156,255,.1); color: #cbd5ff; padding: 2px 6px; border-radius: 4px; font-size: 13px; border: 1px solid rgba(124,156,255,.15); }
+  pre {
+    background: #0a1127; color: #d8e1ff;
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 16px 18px; overflow-x: auto; font-size: 13.5px;
+  }
+  pre .k { color: #ffb86b; } pre .s { color: #6ae3c4; } pre .c { color: #6b7aa2; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .6px; }
+  tbody tr:hover { background: rgba(124,156,255,.04); }
+
+  .svg-wrap { background: var(--panel-2); border: 1px solid var(--border); border-radius: 14px; padding: 16px; overflow-x: auto; }
+  .svg-wrap svg { display: block; margin: auto; max-width: 100%; height: auto; }
+
+  .kpi { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 22px; }
+  @media (max-width: 800px) { .kpi { grid-template-columns: repeat(2, 1fr); } }
+  .kpi .item {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .kpi .item .k { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; }
+  .kpi .item .v { font-size: 18px; font-weight: 700; margin-top: 4px; color: var(--accent); }
+  .kpi .item .v small { color: var(--muted); font-weight: 500; font-size: 12px; margin-left: 6px; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 12px; color: var(--muted); font-size: 13px; }
+  .legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: middle; }
+  .legend .c-in::before { background: #7c9cff; }
+  .legend .c-bridge::before { background: #6ae3c4; }
+  .legend .c-out::before { background: #ffb86b; }
+  .legend .c-side::before { background: #c091ff; }
+
+  ol.steps { padding-left: 22px; }
+  ol.steps li { margin: 6px 0; color: #cfd7ee; }
+
+  footer { color: var(--muted); text-align: center; padding: 30px; font-size: 13px; }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-inner">
+    <span class="badge">.NET 10 · ASP.NET Core · Minimal API</span>
+    <h1>Cyberesa ⇄ BoosterBC — Bridge d'intégration</h1>
+    <p class="lead">
+      Un pont léger qui <strong>expose l'API Cyberesa HotelSearch</strong> (XML/SOAP-like sur <code class="inline">strRQ</code>),
+      traduit la requête vers le format REST JSON de <strong>BoosterBC</strong>, appelle l'endpoint
+      <code class="inline">/hotels/availability</code>, puis retraduit la réponse en
+      <code class="inline">&lt;HotelSearchRES&gt;</code> Cyberesa.
+    </p>
+    <div class="kpi">
+      <div class="item"><div class="k">Entrée</div><div class="v">HotelSearchREQ <small>XML</small></div></div>
+      <div class="item"><div class="k">Sortie</div><div class="v">HotelSearchRES <small>XML</small></div></div>
+      <div class="item"><div class="k">Upstream</div><div class="v">BoosterBC <small>REST JSON</small></div></div>
+      <div class="item"><div class="k">Auth upstream</div><div class="v">apiKey + SHA-512</div></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section>
+  <h2>1. Vue d'ensemble</h2>
+  <p>
+    Le bridge est une application ASP.NET Core minimal API. Il accepte les mêmes routes et le même payload
+    que la plateforme Cyberesa (<code class="inline">POST /cr.ws.clicngo.uapi/hotel/webservicerq</code> avec
+    <code class="inline">strRQ=&lt;xml&gt;</code>), ce qui permet à tout client Cyberesa existant de cibler
+    le bridge sans modification.
+  </p>
+  <p>
+    En interne, une couche de traduction convertit l'enveloppe XML <code class="inline">HotelSearchREQ</code>
+    en paramètres query BoosterBC, signe la requête (SHA-512 de <code class="inline">apiKey + password + timestamp</code>)
+    puis mappe la réponse JSON <code class="inline">availabilityRS</code> vers <code class="inline">HotelSearchRES</code>.
+    Un <em>mock</em> interchangeable permet de tester sans clé valide.
+  </p>
+</section>
+
+<section>
+  <h2>2. Architecture <span class="tag">SVG</span></h2>
+  <div class="svg-wrap">
+    <svg viewBox="0 0 1040 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Architecture diagram">
+      <defs>
+        <linearGradient id="gBlue" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#2b3a6a"/><stop offset="1" stop-color="#1a2340"/>
+        </linearGradient>
+        <linearGradient id="gGreen" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#1f4a48"/><stop offset="1" stop-color="#10302f"/>
+        </linearGradient>
+        <linearGradient id="gOrange" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#5b3d21"/><stop offset="1" stop-color="#2f2013"/>
+        </linearGradient>
+        <linearGradient id="gPurple" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#44315f"/><stop offset="1" stop-color="#261a38"/>
+        </linearGradient>
+        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#94a3c4"/>
+        </marker>
+        <filter id="glow"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <!-- Background grid -->
+      <rect width="1040" height="560" fill="#0f1629"/>
+      <g opacity=".35" stroke="#2a3558" stroke-width="1">
+        <path d="M0 80 H1040 M0 160 H1040 M0 240 H1040 M0 320 H1040 M0 400 H1040 M0 480 H1040"/>
+      </g>
+
+      <!-- Client -->
+      <g>
+        <rect x="30" y="210" width="180" height="140" rx="14" fill="url(#gBlue)" stroke="#3b4a7a"/>
+        <text x="120" y="240" text-anchor="middle" fill="#e6edff" font-size="15" font-weight="700">Client Cyberesa</text>
+        <text x="120" y="262" text-anchor="middle" fill="#94a3c4" font-size="12">front / back-office</text>
+        <text x="120" y="300" text-anchor="middle" fill="#cbd5ff" font-size="12" font-family="ui-monospace,Menlo,Consolas">POST strRQ=&lt;XML&gt;</text>
+        <text x="120" y="318" text-anchor="middle" fill="#7c9cff" font-size="11" font-family="ui-monospace,Menlo,Consolas">HotelSearchREQ</text>
+      </g>
+
+      <!-- Bridge container -->
+      <g>
+        <rect x="270" y="80" width="460" height="400" rx="18" fill="#121a30" stroke="#3f5196" stroke-dasharray="6 4"/>
+        <text x="500" y="108" text-anchor="middle" fill="#6ae3c4" font-size="13" font-weight="700" letter-spacing="1.2">BRIDGE · ASP.NET CORE (.NET 10)</text>
+
+        <!-- Endpoint -->
+        <rect x="300" y="130" width="400" height="70" rx="10" fill="url(#gGreen)" stroke="#2f7a74"/>
+        <text x="500" y="156" text-anchor="middle" fill="#e6edff" font-size="14" font-weight="700">Endpoint minimal API</text>
+        <text x="500" y="178" text-anchor="middle" fill="#c2f0e3" font-size="11.5" font-family="ui-monospace,Menlo,Consolas">POST /cr.ws.clicngo.uapi/hotel/webservicerq</text>
+
+        <!-- XML serializer -->
+        <rect x="300" y="220" width="180" height="70" rx="10" fill="url(#gGreen)" stroke="#2f7a74"/>
+        <text x="390" y="246" text-anchor="middle" fill="#e6edff" font-size="13" font-weight="700">XmlSerializer</text>
+        <text x="390" y="266" text-anchor="middle" fill="#c2f0e3" font-size="11">HotelSearchREQ → POCO</text>
+
+        <!-- Translator -->
+        <rect x="520" y="220" width="180" height="70" rx="10" fill="url(#gGreen)" stroke="#2f7a74"/>
+        <text x="610" y="246" text-anchor="middle" fill="#e6edff" font-size="13" font-weight="700">Translator</text>
+        <text x="610" y="266" text-anchor="middle" fill="#c2f0e3" font-size="11">REQ/RES mapping</text>
+
+        <!-- IBoosterClient -->
+        <rect x="300" y="310" width="400" height="130" rx="10" fill="url(#gGreen)" stroke="#2f7a74"/>
+        <text x="500" y="336" text-anchor="middle" fill="#e6edff" font-size="13" font-weight="700">IBoosterClient</text>
+        <text x="500" y="354" text-anchor="middle" fill="#c2f0e3" font-size="11">interface interchangeable</text>
+
+        <rect x="320" y="370" width="165" height="55" rx="8" fill="#102a2a" stroke="#2f7a74"/>
+        <text x="402" y="391" text-anchor="middle" fill="#e6edff" font-size="12" font-weight="700">BoosterClient</text>
+        <text x="402" y="408" text-anchor="middle" fill="#94a3c4" font-size="10.5">HTTP + SHA-512</text>
+
+        <rect x="515" y="370" width="165" height="55" rx="8" fill="#102a2a" stroke="#2f7a74"/>
+        <text x="597" y="391" text-anchor="middle" fill="#e6edff" font-size="12" font-weight="700">MockBoosterClient</text>
+        <text x="597" y="408" text-anchor="middle" fill="#94a3c4" font-size="10.5">données canned</text>
+
+        <text x="500" y="462" text-anchor="middle" fill="#94a3c4" font-size="11">toggle: <tspan fill="#7c9cff" font-family="ui-monospace,Menlo,Consolas">BoosterBC:UseMock</tspan></text>
+      </g>
+
+      <!-- BoosterBC API -->
+      <g>
+        <rect x="790" y="140" width="220" height="120" rx="14" fill="url(#gOrange)" stroke="#8a5a28"/>
+        <text x="900" y="170" text-anchor="middle" fill="#ffb86b" font-size="13" font-weight="700" letter-spacing=".8">BOOSTERBC API</text>
+        <text x="900" y="192" text-anchor="middle" fill="#e6edff" font-size="12" font-weight="700">REST JSON</text>
+        <text x="900" y="215" text-anchor="middle" fill="#fde0b9" font-size="11" font-family="ui-monospace,Menlo,Consolas">GET /hotels/availability</text>
+        <text x="900" y="232" text-anchor="middle" fill="#94a3c4" font-size="10.5">api-test | api-prod</text>
+      </g>
+
+      <!-- File logs -->
+      <g>
+        <rect x="790" y="310" width="220" height="110" rx="14" fill="url(#gPurple)" stroke="#7a5aa2"/>
+        <text x="900" y="338" text-anchor="middle" fill="#c091ff" font-size="13" font-weight="700" letter-spacing=".8">FICHIERS</text>
+        <text x="900" y="360" text-anchor="middle" fill="#e6edff" font-size="12" font-weight="700">logs/booster/</text>
+        <text x="900" y="380" text-anchor="middle" fill="#e6d4ff" font-size="10.5" font-family="ui-monospace,Menlo,Consolas">{ts}_{id}_REQ.txt</text>
+        <text x="900" y="396" text-anchor="middle" fill="#e6d4ff" font-size="10.5" font-family="ui-monospace,Menlo,Consolas">{ts}_{id}_RES.json</text>
+      </g>
+
+      <!-- Arrows -->
+      <g stroke="#94a3c4" stroke-width="1.8" fill="none" marker-end="url(#arrow)">
+        <path d="M210 280 L300 280"/>
+        <path d="M300 280 L300 280"/>
+        <path d="M700 250 L790 200"/>
+        <path d="M790 365 L720 405"/>
+      </g>
+      <g stroke="#94a3c4" stroke-width="1.8" fill="none" marker-end="url(#arrow)" marker-start="url(#arrow)">
+        <!-- nothing -->
+      </g>
+
+      <!-- Return arrows with different color -->
+      <g stroke="#6ae3c4" stroke-width="1.8" fill="none" marker-end="url(#arrow)">
+        <path d="M300 310 L210 310"/>
+        <path d="M790 220 L700 260"/>
+      </g>
+
+      <!-- Labels on arrows -->
+      <g font-size="11" fill="#94a3c4" font-family="ui-monospace,Menlo,Consolas">
+        <text x="255" y="272">XML</text>
+        <text x="255" y="326">XML</text>
+        <text x="732" y="195">GET JSON</text>
+        <text x="732" y="275">200 JSON</text>
+        <text x="745" y="385">write</text>
+      </g>
+    </svg>
+  </div>
+  <div class="legend">
+    <span class="c-in">Client / entrée Cyberesa</span>
+    <span class="c-bridge">Bridge (.NET)</span>
+    <span class="c-out">Upstream BoosterBC</span>
+    <span class="c-side">Side-channel fichiers</span>
+  </div>
+</section>
+
+<section>
+  <h2>3. Diagramme de séquence <span class="tag">SVG</span></h2>
+  <div class="svg-wrap">
+    <svg viewBox="0 0 1040 780" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sequence diagram">
+      <defs>
+        <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#cfd7ee"/>
+        </marker>
+        <marker id="arr2g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#6ae3c4"/>
+        </marker>
+      </defs>
+
+      <rect width="1040" height="780" fill="#0f1629"/>
+
+      <!-- Lifeline headers -->
+      <g>
+        <rect x="40" y="30" width="180" height="48" rx="10" fill="#2b3a6a" stroke="#3b4a7a"/>
+        <text x="130" y="60" text-anchor="middle" fill="#e6edff" font-size="13" font-weight="700">Client Cyberesa</text>
+
+        <rect x="275" y="30" width="180" height="48" rx="10" fill="#1f4a48" stroke="#2f7a74"/>
+        <text x="365" y="60" text-anchor="middle" fill="#e6edff" font-size="13" font-weight="700">Bridge (Program.cs)</text>
+
+        <rect x="505" y="30" width="180" height="48" rx="10" fill="#1f4a48" stroke="#2f7a74"/>
+        <text x="595" y="60" text-anchor="middle" fill="#e6edff" font-size="13" font-weight="700">Translator</text>
+
+        <rect x="730" y="30" width="180" height="48" rx="10" fill="#1f4a48" stroke="#2f7a74"/>
+        <text x="820" y="60" text-anchor="middle" fill="#e6edff" font-size="13" font-weight="700">BoosterClient</text>
+
+        <rect x="930" y="30" width="100" height="48" rx="10" fill="#5b3d21" stroke="#8a5a28"/>
+        <text x="980" y="60" text-anchor="middle" fill="#fde0b9" font-size="12" font-weight="700">BoosterBC</text>
+      </g>
+
+      <!-- Lifelines (vertical dashed) -->
+      <g stroke="#2a3558" stroke-dasharray="5 5">
+        <line x1="130" y1="80" x2="130" y2="760"/>
+        <line x1="365" y1="80" x2="365" y2="760"/>
+        <line x1="595" y1="80" x2="595" y2="760"/>
+        <line x1="820" y1="80" x2="820" y2="760"/>
+        <line x1="980" y1="80" x2="980" y2="760"/>
+      </g>
+
+      <!-- Messages -->
+      <g font-family="Inter,system-ui" font-size="12" fill="#cfd7ee">
+
+        <!-- 1 -->
+        <line x1="130" y1="120" x2="365" y2="120" stroke="#cfd7ee" stroke-width="1.6" marker-end="url(#arr2)"/>
+        <text x="247" y="113" text-anchor="middle">1. POST /cr.ws.clicngo.uapi/hotel/webservicerq — strRQ=&lt;HotelSearchREQ&gt;</text>
+
+        <!-- 2 self -->
+        <path d="M365 150 C 420 150, 420 180, 365 180" stroke="#cfd7ee" stroke-width="1.6" fill="none" marker-end="url(#arr2)"/>
+        <text x="430" y="170" fill="#94a3c4">2. XmlSerializer.Deserialize → HotelSearchReq POCO</text>
+
+        <!-- 3 -->
+        <line x1="365" y1="215" x2="595" y2="215" stroke="#cfd7ee" stroke-width="1.6" marker-end="url(#arr2)"/>
+        <text x="480" y="208" text-anchor="middle">3. ToBoosterQuery(req)</text>
+
+        <!-- 3b self -->
+        <path d="M595 240 C 650 240, 650 280, 595 280" stroke="#cfd7ee" stroke-width="1.6" fill="none" marker-end="url(#arr2)"/>
+        <text x="660" y="265" fill="#94a3c4">• dd/MM/yyyy → yyyy-MM-dd</text>
+        <text x="660" y="280" fill="#94a3c4">• pax = "A,age1,…;A2,…"</text>
+        <text x="660" y="295" fill="#94a3c4">• filters → query keys</text>
+
+        <!-- 4 -->
+        <line x1="595" y1="325" x2="365" y2="325" stroke="#6ae3c4" stroke-width="1.6" marker-end="url(#arr2g)"/>
+        <text x="480" y="318" text-anchor="middle" fill="#6ae3c4">4. IDictionary&lt;string,string?&gt; query</text>
+
+        <!-- 5 -->
+        <line x1="365" y1="360" x2="820" y2="360" stroke="#cfd7ee" stroke-width="1.6" marker-end="url(#arr2)"/>
+        <text x="592" y="353" text-anchor="middle">5. GetAvailabilityAsync(query, ct)</text>
+
+        <!-- 6 self -->
+        <path d="M820 385 C 880 385, 880 425, 820 425" stroke="#cfd7ee" stroke-width="1.6" fill="none" marker-end="url(#arr2)"/>
+        <text x="888" y="405" fill="#94a3c4">6. sig = SHA-512( apiKey + password + unix_ts )</text>
+
+        <!-- 7 -->
+        <line x1="820" y1="450" x2="980" y2="450" stroke="#cfd7ee" stroke-width="1.6" marker-end="url(#arr2)"/>
+        <text x="900" y="443" text-anchor="middle">7. GET /hotels/availability?…</text>
+        <text x="900" y="468" text-anchor="middle" fill="#94a3c4" font-size="11">headers: apiKey, timestamp, signature</text>
+
+        <!-- 8 -->
+        <line x1="980" y1="495" x2="820" y2="495" stroke="#6ae3c4" stroke-width="1.6" marker-end="url(#arr2g)"/>
+        <text x="900" y="488" text-anchor="middle" fill="#6ae3c4">8. 200 availabilityRS (JSON)</text>
+
+        <!-- 9 self -->
+        <path d="M820 520 C 880 520, 880 555, 820 555" stroke="#c091ff" stroke-width="1.6" fill="none" marker-end="url(#arr2)"/>
+        <text x="888" y="540" fill="#c091ff">9. BoosterCallLogger → logs/booster/{id}_REQ.txt · _RES.json</text>
+
+        <!-- 10 -->
+        <line x1="820" y1="585" x2="365" y2="585" stroke="#6ae3c4" stroke-width="1.6" marker-end="url(#arr2g)"/>
+        <text x="592" y="578" text-anchor="middle" fill="#6ae3c4">10. BoosterAvailabilityResponse</text>
+
+        <!-- 11 -->
+        <line x1="365" y1="620" x2="595" y2="620" stroke="#cfd7ee" stroke-width="1.6" marker-end="url(#arr2)"/>
+        <text x="480" y="613" text-anchor="middle">11. ToCyberesaResponse(br, req)</text>
+
+        <!-- 12 -->
+        <line x1="595" y1="655" x2="365" y2="655" stroke="#6ae3c4" stroke-width="1.6" marker-end="url(#arr2g)"/>
+        <text x="480" y="648" text-anchor="middle" fill="#6ae3c4">12. HotelSearchRes POCO</text>
+
+        <!-- 13 -->
+        <line x1="365" y1="700" x2="130" y2="700" stroke="#6ae3c4" stroke-width="1.6" marker-end="url(#arr2g)"/>
+        <text x="247" y="693" text-anchor="middle" fill="#6ae3c4">13. 200 text/xml — &lt;HotelSearchRES&gt;</text>
+      </g>
+
+      <!-- Activation bars -->
+      <g fill="#6ae3c4" opacity=".18">
+        <rect x="357" y="120" width="16" height="595" rx="3"/>
+        <rect x="587" y="215" width="16" height="85" rx="3"/>
+        <rect x="587" y="620" width="16" height="45" rx="3"/>
+        <rect x="812" y="360" width="16" height="235" rx="3"/>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<section>
+  <h2>4. Endpoints du bridge</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>Méthode</th><th>Route</th><th>Payload</th><th>Réponse</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">POST</code></td><td><code class="inline">/cr.ws.clicngo.uapi/hotel/webservicerq</code></td><td><code class="inline">strRQ=&lt;HotelSearchREQ&gt;</code> (form)</td><td><code class="inline">text/xml</code> HotelSearchRES</td></tr>
+        <tr><td><code class="inline">GET</code></td><td><code class="inline">/cr.ws.clicngo.uapi/hotel/webservicerq?strRQ=…</code></td><td>XML URL-encodé</td><td><code class="inline">text/xml</code> HotelSearchRES</td></tr>
+        <tr><td><code class="inline">POST / GET</code></td><td><code class="inline">/cr.ws/Hotel.asmx/WebServiceRQ</code></td><td>idem</td><td>idem (alias legacy)</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:16px; color: var(--muted);">
+      Le bridge écoute par défaut sur <code class="inline">http://localhost:5080</code>
+      (cf. <code class="inline">Properties/launchSettings.json</code>).
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>5. Mapping Cyberesa → BoosterBC</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Requête</h3>
+      <table>
+        <thead><tr><th>Cyberesa (XML)</th><th>BoosterBC (query)</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inline">BookingDetails/IdCity</code></td><td><code class="inline">cityId</code></td></tr>
+          <tr><td><code class="inline">FromDate</code> <span style="color:var(--muted)">dd/MM/yyyy</span></td><td><code class="inline">checkin</code> <span style="color:var(--muted)">yyyy-MM-dd</span></td></tr>
+          <tr><td><code class="inline">ToDate</code></td><td><code class="inline">checkout</code></td></tr>
+          <tr><td><code class="inline">Rooms/Room/Pax</code></td><td><code class="inline">pax</code> <span style="color:var(--muted)">A,age…;A,…</span></td></tr>
+          <tr><td><code class="inline">Filters/Nationality</code></td><td><code class="inline">clientNationality</code></td></tr>
+          <tr><td><code class="inline">Filters/hotels_ids</code></td><td><code class="inline">hotelCodes</code></td></tr>
+          <tr><td><code class="inline">Filters/ItemsPerPage</code></td><td><code class="inline">itemsPerPage</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Réponse</h3>
+      <table>
+        <thead><tr><th>BoosterBC (JSON)</th><th>Cyberesa (XML)</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inline">hotels[].hotelId</code></td><td><code class="inline">Hotel/@id</code></td></tr>
+          <tr><td><code class="inline">hotels[].name</code></td><td><code class="inline">Hotel/Title</code></td></tr>
+          <tr><td><code class="inline">hotels[].rating</code></td><td><code class="inline">Hotel/Category</code></td></tr>
+          <tr><td><code class="inline">hotels[].lat · long</code></td><td><code class="inline">Localization</code></td></tr>
+          <tr><td><code class="inline">rooms[].code</code></td><td><code class="inline">Room/@id</code></td></tr>
+          <tr><td><code class="inline">rates[].rateKey</code></td><td><code class="inline">Boarding/@OfferId</code></td></tr>
+          <tr><td><code class="inline">rates[].amount</code></td><td><code class="inline">Rate</code></td></tr>
+          <tr><td><code class="inline">rates[].availability A|S|R</code></td><td><code class="inline">Available/@code · @status</code></td></tr>
+          <tr><td><code class="inline">cancellationPolicies[]</code></td><td><code class="inline">CancellationPolicy</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>6. Authentification BoosterBC</h2>
+  <div class="card">
+    <p>
+      Chaque appel ajoute trois headers. La signature expire vite (horodatage contrôlé serveur) ; elle est régénérée à chaque requête.
+    </p>
+<pre><span class="c">// trois headers requis</span>
+apiKey:    <span class="s">"&lt;apiKey&gt;"</span>
+timestamp: <span class="s">"&lt;unix seconds UTC&gt;"</span>
+signature: <span class="s">SHA-512( apiKey + password + timestamp )</span>  <span class="c">// hex lower-case</span>
+</pre>
+    <p style="margin-top:14px;">
+      Config dans <code class="inline">appsettings.json</code> (section <code class="inline">BoosterBC</code>).
+      Pour une exécution locale sans clé valide, activer <code class="inline">"UseMock": true</code> :
+      le bridge injecte <code class="inline">MockBoosterClient</code> via DI et renvoie deux hôtels de test.
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>7. Journalisation des échanges upstream</h2>
+  <div class="card">
+    <p>
+      Chaque appel Booster (réel ou mock) produit deux fichiers sous
+      <code class="inline">bin/Debug/net10.0/logs/booster/</code> :
+    </p>
+<pre>20260419_101234_567_ab12cd_REQ.txt    <span class="c"># URL + headers (apiKey, timestamp, signature)</span>
+20260419_101234_567_ab12cd_RES.json   <span class="c"># HTTP status + body JSON indenté</span></pre>
+    <p>
+      Le préfixe <code class="inline">&lt;UTC&gt;_&lt;id6hex&gt;</code> est partagé par la paire REQ/RES.
+      Les mêmes blocs apparaissent aussi en stdout (préfixés <code class="inline">===== BOOSTER REQ/RES =====</code>).
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>8. Lancer en local</h2>
+  <div class="card">
+<pre><span class="k">cd</span> CyberesaBoosterBridge
+<span class="k">dotnet</span> run
+<span class="c"># → http://localhost:5080</span>
+
+<span class="c"># test end-to-end (exemple livré avec le projet)</span>
+<span class="k">curl</span> -X POST http://localhost:5080/cr.ws.clicngo.uapi/hotel/webservicerq \
+  --data-urlencode <span class="s">"strRQ@samples/sample_hotelsearchreq.xml"</span></pre>
+    <ol class="steps">
+      <li>Réponse attendue : <code class="inline">&lt;HotelSearchRES&gt;</code> avec deux hôtels mockés.</li>
+      <li>Fichiers REQ/RES déposés dans <code class="inline">logs/booster/</code>.</li>
+      <li>Pour basculer en mode réel : mettre <code class="inline">UseMock: false</code> + renseigner <code class="inline">ApiKey</code> / <code class="inline">Password</code> dans <code class="inline">appsettings.json</code> (ou un <code class="inline">appsettings.Local.json</code> ignoré par git).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>9. Points d'extension</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Ajouter une opération</h3>
+      <p>Pour couvrir <code class="inline">HotelQuote</code> / <code class="inline">HotelBookingCreation</code> etc. : ajouter une route dans <code class="inline">Program.cs</code>, un POCO XML dans <code class="inline">Models/</code>, une méthode dans <code class="inline">IBoosterClient</code> (<code class="inline">/hotels/checkRate</code>, <code class="inline">/hotels/book</code>) et un mapping dans <code class="inline">Translator</code>.</p>
+    </div>
+    <div class="card">
+      <h3>Remplacer le mock</h3>
+      <p>Le mock est un simple <code class="inline">IBoosterClient</code>. On peut le remplacer par un stub WireMock / WireMock.Net pour rejouer des fixtures, ou par un enregistreur de cassettes (VCR) à partir des fichiers <code class="inline">logs/booster/</code>.</p>
+    </div>
+    <div class="card">
+      <h3>Observabilité</h3>
+      <p>Ajouter <code class="inline">AddOpenTelemetry()</code> pour exporter les traces (l'appel entrant, la traduction, l'appel sortant). Le logger fichier actuel reste utile pour rejeu offline.</p>
+    </div>
+    <div class="card">
+      <h3>Sécurité</h3>
+      <p>Valider les creds <code class="inline">&lt;Credential&gt;</code> côté bridge (allowlist de logins, IP whitelist). Aujourd'hui, le bridge ne ré-authentifie pas le client Cyberesa : il faut l'ajouter avant mise en prod.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Cyberesa ⇄ BoosterBC Bridge · .NET 10 · <a href="https://github.com/yassineLajmi/cr.cygale">github.com/yassineLajmi/cr.cygale</a>
+</footer>
+
+</main>
+</body>
+</html>
